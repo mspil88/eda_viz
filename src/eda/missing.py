@@ -10,3 +10,8 @@ def calculate_missing_values(df, shape):
         missing[column] = {"count": missing_count, "proportion": 0 if length == 0 else missing_count/length}
 
     return missing
+
+
+def missing_plot(missing):
+    missing_counts = {column: value["count"] for column, value in missing.items()}
+    pass
