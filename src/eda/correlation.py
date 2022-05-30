@@ -55,7 +55,9 @@ class Cramer(Correlation):
             cramers_matrix.loc[v1, v2] = cramers_matrix.loc[v2, v1]
         return cramers_matrix
 
+
 class Kendall(Correlation):
-    pass
+    def calculate(df, summary):
+        return df.corr(method="kendall")
 
 
