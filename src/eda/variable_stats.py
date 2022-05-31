@@ -2,12 +2,13 @@ import pandas as pd
 import numpy as np
 
 
-def numeric_statistics(column: pd.Series):
+def numeric_statistics(column: pd.Series, column_name: str):
     _min = column.min()
     _max = column.max()
     q25 = np.percentile(column, 25)
     q75 = np.percentile(column, 75)
-    return {"stats":
+    return {column_name: {
+            "stats":
             {"mean": column.mean(),
              "variance": column.var(),
              "std": column.std(),
@@ -17,13 +18,14 @@ def numeric_statistics(column: pd.Series):
              "Q75": q75,
              "max": _max,
              "range": _max - _min,
-             "IQR": q75-q25,
+             "IQR": q75 - q25,
              "skew": column.skew(),
              "kurtosis": column.kurt(),
              "sum": np.sum(column)
-    }}
+             }}}
 
 
-def categorical_statistics(column: pd.Series):
-    return {"stats":
-                {"mode": column.mode[0]}}
+def categorical_statistics(column: pd.Series, column_name: str):
+    return {column_name:
+                {"stats":
+                     {"mode": column.mode[0]}}}
