@@ -23,5 +23,5 @@ def df_level_missing_values(missing_dict, shape):
 
 
 def missing_plot(missing):
-    missing_counts = {column: value["count"] for column, value in missing.items()}
+    missing_counts = {column: value["count"] for column, value in missing.items() if value["count"] > 0.0}
     pass
