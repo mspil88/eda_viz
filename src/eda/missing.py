@@ -2,15 +2,11 @@ import pandas as pd
 import numpy as np
 
 
-def calculate_missing_values(df: pd.DataFrame, shape: tuple) -> dict:
-    missing = {}
-    length = shape[1]
+def calculate_missing_values(column: pd.Series) -> dict:
+    length = len(column)
+    missing_count = column.isna().sum()
 
-    for column in df:
-        missing_count = df[column].isna().sum()
-        missing[column] = {"count": missing_count, "proportion": 0 if length == 0 else missing_count/length}
-
-    return missing
+    return {"missing": {"count": missing_count, "proportion": 0 if length == 0 else missing_count / length}}
 
 
 def df_level_missing_values(missing_dict: dict, shape: tuple) -> dict:
