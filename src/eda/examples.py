@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class Example:
     _type: str
-    data: pd.dataFrame
+    data: pd.DataFrame or pd.Series
 
 
 def get_example(df, example_type, **kwargs):
