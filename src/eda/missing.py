@@ -9,7 +9,17 @@ def calculate_missing_values(column: pd.Series) -> dict:
     return {"missing": {"count": missing_count, "proportion": 0 if length == 0 else missing_count / length}}
 
 
-def df_level_missing_values(missing_dict: dict, shape: tuple) -> dict:
+def df_level_missing_values(df: pd.DataFrame) -> tuple:
+    missing_dict = df.isnull().sum().sort_values(ascending=False).to_dict()
+    missing_values = np.sum(missing_dict.values())
+    df_shape = df.shape
+    proportion_missing = missing_values/(df_shape[0]*df_shape[1])
+
+    return ({"missing": {"count": missing_values, "proportion": proportion_missing}},
+            {"missing_plot": {"x": list(missing_dict.keys()), "y": list(missing_dict.values())}})
+
+
+def df_level_missing_values_2(missing_dict: dict, shape: tuple) -> dict:
     counts = np.array([v['count'] for k, v in missing_dict.items()])
     missing_cells = np.sum(counts)
     missing_cells_prop = missing_cells/(shape[0]*shape[1])
