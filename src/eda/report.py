@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Callable
 import pandas as pd
-import numpy as np
 from missing import calculate_missing_values, df_level_missing_values
 from distinct import count_distinct, count_zero_values
 from examples import get_example
@@ -9,7 +8,7 @@ from variable_stats import numeric_statistics, categorical_statistics
 from plots import histogram_values, frequency_values
 from shape import get_shape
 from duplicates import get_duplicates
-
+from data_types import get_data_types, count_data_types
 
 class VariableReport(ABC):
 
@@ -113,11 +112,11 @@ class Overview(ABC):
         pass
 
     @abstractmethod
-    def get_duplicates(self):
+    def count_duplicates(self):
         pass
 
     @abstractmethod
-    def get_data_types(self):
+    def retrieve_data_types(self):
         pass
 
 class OverviewReport(Overview):
@@ -142,10 +141,14 @@ class OverviewReport(Overview):
         self.misssing_plot = missing_plot
         return self
 
-    def get_duplicates(self, df: pd.DataFrame):
+    def count_duplicates(self, df: pd.DataFrame):
         self.duplicates = get_duplicates(df)
         return self
 
+    def retrieve_data_types(self, df:pd.DataFrame, **kwargs):
+        self.variable_type_mapping = get_data_types(df)
+        self.variable_types = count_data_types(self.variable_type_mapping)
+        return self
 
 
 
