@@ -123,13 +123,17 @@ class Overview(ABC):
     def retrieve_data_types(self):
         pass
 
+    @abstractmethod
+    def generate_summary(self):
+        pass
+
 
 class OverviewReport(Overview):
     def __init__(self):
         self.num_variables = None
         self.num_obs = None
         self.missing = None
-        self.misssing_plot = None
+        self.missing_plot = None
         self.duplicate = None
         self.variable_type_mapping = None
         self.variable_types = None
@@ -147,7 +151,7 @@ class OverviewReport(Overview):
         return self
 
     def count_duplicates(self, df: pd.DataFrame):
-        self.duplicates = get_duplicates(df)
+        self.duplicates = get_duplicates(df, self.num_obs["rows"])
         return self
 
     def retrieve_data_types(self, df:pd.DataFrame, **kwargs):
@@ -155,11 +159,14 @@ class OverviewReport(Overview):
         self.variable_types = count_data_types(self.variable_type_mapping)
         return self
 
-
-
-
-
-
-
-
-
+    def generate_summary(self, df:pd.DataFrame):
+        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_data_types(df)
+        return {"overview":
+                [self.num_obs,
+                 self.num_variables,
+                 self.missing,
+                 self.missing_plot,
+                 self.duplicates,
+                 self.variable_type_mapping,
+                 self.variable_types]
+                }
