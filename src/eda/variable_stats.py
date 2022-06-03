@@ -2,7 +2,7 @@ from math import e
 import pandas as pd
 import numpy as np
 
-def numeric_statistics(column: pd.Series):
+def numeric_statistics(column: pd.Series) -> dict:
     _min = column.min()
     _max = column.max()
     q25 = np.nanpercentile(column, 25)
@@ -24,15 +24,14 @@ def numeric_statistics(column: pd.Series):
              }}
 
 
-def entropy(column: pd.Series):
+def entropy(column: pd.Series) -> float:
     _, counts = np.unique(column, return_counts=True)
     probabilities = counts/counts.sum()
 
     return -(probabilities * np.log(probabilities)).sum()
 
 
-
-def categorical_statistics(column: pd.Series):
+def categorical_statistics(column: pd.Series) -> dict:
     return {"stats":
                      {"mode": column.mode[0],
                       "entropy": entropy(column)}}
