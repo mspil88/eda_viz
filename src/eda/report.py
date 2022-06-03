@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Callable
+from math import ceil
 import pandas as pd
 from missing import calculate_missing_values, df_level_missing_values
 from distinct import count_distinct, count_zero_values
@@ -9,6 +10,7 @@ from plots import histogram_values, frequency_values
 from shape import get_shape
 from duplicates import get_duplicates
 from data_types import get_data_types, count_data_types
+
 
 class VariableReport(ABC):
 
@@ -67,7 +69,9 @@ class NumericVariableReport(VariableReport):
         return self
 
     def retrieve_example(self, column: pd.Series):
-        example = get_example(column, "sample", n=10).data.values
+        sampled_proportion = 0.1
+        sample_size = ceil(len(column)*sampled_proportion)
+        example = get_example(column, "sample", n=sample_size).data.values
         self.examples = {"example": example}
         return self
 
@@ -118,6 +122,7 @@ class Overview(ABC):
     @abstractmethod
     def retrieve_data_types(self):
         pass
+
 
 class OverviewReport(Overview):
     def __init__(self):
