@@ -11,7 +11,7 @@ def calculate_missing_values(column: pd.Series) -> dict:
 
 def df_level_missing_values(df: pd.DataFrame) -> tuple:
     missing_dict = df.isnull().sum().sort_values(ascending=False).to_dict()
-    missing_values = np.sum(missing_dict.values())
+    missing_values = np.sum(list(missing_dict.values()))
     df_shape = df.shape
     proportion_missing = missing_values/(df_shape[0]*df_shape[1])
 
