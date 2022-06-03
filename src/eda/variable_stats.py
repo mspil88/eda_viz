@@ -26,13 +26,17 @@ def numeric_statistics(column: pd.Series) -> dict:
 
 
 def entropy(column: pd.Series) -> float:
-    _, counts = np.unique(column, return_counts=True)
-    probabilities = counts/counts.sum()
+    try:
+        _, counts = np.unique(column, return_counts=True)
+        probabilities = counts/counts.sum()
+    except TypeError:
+        counts = column.value_counts()
+        probabilities = list(counts/counts.sum())
 
     return -(probabilities * np.log(probabilities)).sum()
 
 
 def categorical_statistics(column: pd.Series) -> dict:
     return {"stats":
-                     {"mode": column.mode[0],
+                     {"mode": column.mode()[0],
                       "entropy": entropy(column)}}
