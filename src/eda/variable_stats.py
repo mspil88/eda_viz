@@ -2,6 +2,7 @@ from math import e
 import pandas as pd
 import numpy as np
 
+
 def numeric_statistics(column: pd.Series) -> dict:
     _min = column.min()
     _max = column.max()
