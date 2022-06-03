@@ -146,8 +146,9 @@ class OverviewReport(Overview):
 
     def get_missing_values(self, df: pd.DataFrame):
         missing_info, missing_plot = df_level_missing_values(df)
+        print(f"MISSING PLOT: {missing_plot}")
         self.missing = missing_info
-        self.misssing_plot = missing_plot
+        self.missing_plot = missing_plot
         return self
 
     def count_duplicates(self, df: pd.DataFrame):
