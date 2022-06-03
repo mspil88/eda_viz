@@ -1,6 +1,6 @@
+from math import e
 import pandas as pd
 import numpy as np
-
 
 def numeric_statistics(column: pd.Series):
     _min = column.min()
@@ -24,6 +24,15 @@ def numeric_statistics(column: pd.Series):
              }}
 
 
+def entropy(column: pd.Series):
+    _, counts = np.unique(column, return_counts=True)
+    probabilities = counts/counts.sum()
+
+    return -(probabilities * np.log(probabilities)).sum()
+
+
+
 def categorical_statistics(column: pd.Series):
     return {"stats":
-                     {"mode": column.mode[0]}}
+                     {"mode": column.mode[0],
+                      "entropy": entropy(column)}}
