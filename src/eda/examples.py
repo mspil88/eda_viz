@@ -13,7 +13,7 @@ def get_example(df, example_type, **kwargs):
     elif example_type == "tail":
         return Example("tail", df.tail(**kwargs))
     elif example_type == "sample":
-        return Example("sample", df.sample(**kwargs))
+        return Example("sample", df[~df.isna()].sample(**kwargs))
 
 
 
