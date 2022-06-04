@@ -69,7 +69,7 @@ class NumericVariableReport(VariableReport):
         return self
 
     def retrieve_example(self, column: pd.Series):
-        sampled_proportion = 0.1
+        sampled_proportion = 0.01
         sample_size = ceil(len(column)*sampled_proportion)
         example = get_example(column, "sample", n=sample_size).data.values
         self.examples = {"example": example}
@@ -124,6 +124,10 @@ class Overview(ABC):
         pass
 
     @abstractmethod
+    def retrieve_examples(self):
+        pass
+
+    @abstractmethod
     def generate_summary(self):
         pass
 
@@ -137,6 +141,7 @@ class OverviewReport(Overview):
         self.duplicate = None
         self.variable_type_mapping = None
         self.variable_types = None
+        self.examples = None
 
     def get_counts(self, df: pd.DataFrame):
         rows, columns = get_shape(df)
@@ -146,7 +151,6 @@ class OverviewReport(Overview):
 
     def get_missing_values(self, df: pd.DataFrame):
         missing_info, missing_plot = df_level_missing_values(df)
-        print(f"MISSING PLOT: {missing_plot}")
         self.missing = missing_info
         self.missing_plot = missing_plot
         return self
@@ -160,14 +164,22 @@ class OverviewReport(Overview):
         self.variable_types = count_data_types(self.variable_type_mapping)
         return self
 
+    def retrieve_examples(self, df: pd.DataFrame):
+        head = get_example(df, "head")
+        tail = get_example(df, "tail")
+        self.examples = {"example": {"head": head, "tail": tail}}
+        return self
+
+
     def generate_summary(self, df:pd.DataFrame):
-        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_data_types(df)
+        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_examples(df).retrieve_data_types(df)
         return {"overview":
-                [self.num_obs,
+            [self.num_obs,
                  self.num_variables,
                  self.missing,
                  self.missing_plot,
                  self.duplicates,
+                 self.examples,
                  self.variable_type_mapping,
                  self.variable_types]
                 }
