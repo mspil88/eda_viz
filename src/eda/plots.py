@@ -12,7 +12,15 @@ def histogram_values(column: pd.Series, **kwargs) -> dict:
 
 
 def frequency_values(column: pd.Series) -> dict:
-    value_counts = column.value_counts().to_dict()
-    return {"distribution": {"x": list(value_counts.keys()), "y": list(value_counts.values())}}
+    value_counts = column.value_counts()
+    value_counts_top5 = value_counts[: 5]
+    frequency_dict = value_counts_top5.to_dict()
+
+    if len(frequency_dict) <= 5:
+        value_sum = value_counts.sum()
+        remainder = value_sum - value_counts_top5.sum()
+        frequency_dict['other'] = remainder
+
+    return {"distribution": {"x": list(frequency_dict.keys()), "y": list(frequency_dict.values())}}
 
 
