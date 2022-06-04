@@ -36,4 +36,4 @@ def count_data_types(d_type_dict: dict) -> dict:
         else:
             dtype_counts[d_type] = 1
 
-    return dtype_counts
+    return {"mapped_type_count": dtype_counts}
