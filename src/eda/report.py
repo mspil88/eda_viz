@@ -71,7 +71,7 @@ class NumericVariableReport(VariableReport):
     def retrieve_example(self, column: pd.Series):
         sampled_proportion = 0.01
         sample_size = ceil(len(column)*sampled_proportion)
-        example = get_example(column, "sample", n=sample_size).data.values
+        example = get_example(column, "sample", n=sample_size).data
         self.examples = {"example": example}
         return self
 
@@ -167,9 +167,8 @@ class OverviewReport(Overview):
     def retrieve_examples(self, df: pd.DataFrame):
         head = get_example(df, "head")
         tail = get_example(df, "tail")
-        self.examples = {"example": {"head": head, "tail": tail}}
+        self.examples = {"example": {"head": head.data, "tail": tail.data}}
         return self
-
 
     def generate_summary(self, df:pd.DataFrame):
         self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_examples(df).retrieve_data_types(df)
