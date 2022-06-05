@@ -8,7 +8,7 @@ def histogram_values(column: pd.Series, **kwargs) -> dict:
         histogram = np.histogram(column[~check_nans], **kwargs)
     else:
         histogram = np.histogram(column, **kwargs)
-    return {"distribution": {"x": histogram[1], "y": histogram[0]}}
+    return {"distribution": {"x": list(histogram[1]), "y": list(histogram[0])}}
 
 
 def frequency_values(column: pd.Series) -> dict:
@@ -16,7 +16,7 @@ def frequency_values(column: pd.Series) -> dict:
     value_counts_top5 = value_counts[: 5]
     frequency_dict = value_counts_top5.to_dict()
 
-    if len(frequency_dict) <= 5:
+    if len(value_counts) >= 5:
         value_sum = value_counts.sum()
         remainder = value_sum - value_counts_top5.sum()
         frequency_dict['other'] = remainder
