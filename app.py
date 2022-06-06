@@ -25,6 +25,6 @@ def get_user(id):
 def overview():
     #temp load
     data = pd.read_csv(os.path.join('/mnt/c/Users/matth/workspace/eda_viz/src/eda/data', "train.csv"))
-    print(data.head())
-    return "<h1> overview </h1>"
+
+    return render_template("overview.html")
 

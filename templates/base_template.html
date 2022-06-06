@@ -4,12 +4,36 @@
     <head>
         <meta name="viewport" content="initial-scale=1, width=device-width">
         <link href="/static/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
     </head>
 
     <body>
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-list fa-2x nav-icon"></i>
+                    <span class="nav-text">Overview</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-chart-bar fa-2x nav-icon"></i>
+                    <span class="nav-text">Variables</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fab fa-uncharted fa-2x nav-icon"></i>
+                    <span class="nav-text">Relationships</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
 
     <main class="main-container">
-        {% block main %}{% endblock $}
+        {% block main %}{% endblock %}
     </main>
 
     </body>
