@@ -1,5 +1,66 @@
 {% extends "base_template.html" %}
 {% block main %}
-<h1>HI THERE</h1>
+    <div class="page-title">
+        <h1>Overview</h1>
+    </div>
+
+    <div class="info-container">
+        <div class="summary-container">
+            <div class="summary-sub key-stats">
+                <h3 class="info-sub-title">Key stats</h3>
+                <table class="info-table">
+                    <tr>
+                        <td class="td-label">Number of rows</td>
+                        <td class="td-value">888</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Number of variables</td>
+                        <td class="td-value">12</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Missing Values</td>
+                        <td class="td-value">874</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Missing Values (%)</td>
+                        <td class="td-value">0.5%</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Duplicate Rows</td>
+                        <td class="td-value">23</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Duplicate Rows (%)</td>
+                        <td class="td-value">0.04%</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="summary-sub var-meta">
+                <h3 class="info-sub-title">Variable info</h3>
+                <table class="info-table">
+                    <tr>
+                        <td class="td-label">Numeric</td>
+                        <td class="td-value">3</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Categorical</td>
+                        <td class="td-value">9</td>
+                    </tr>
+
+                </table>
+            </div>
+
+
+        </div>
+        <div class="missing-container">
+
+        </div>
+        <div class="sample-container">
+
+        </div>
+
+    </div>
+
+
 
 {% endblock %}
