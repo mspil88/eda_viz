@@ -11,27 +11,27 @@
                 <table class="info-table">
                     <tr>
                         <td class="td-label">Number of rows</td>
-                        <td class="td-value">888</td>
+                        <td class="td-value">-</td>
                     </tr>
                     <tr>
                         <td class="td-label">Number of variables</td>
-                        <td class="td-value">12</td>
+                        <td class="td-value">-</td>
                     </tr>
                     <tr>
                         <td class="td-label">Missing Values</td>
-                        <td class="td-value">874</td>
+                        <td class="td-value">-</td>
                     </tr>
                     <tr>
                         <td class="td-label">Missing Values (%)</td>
-                        <td class="td-value">0.5%</td>
+                        <td class="td-value">-</td>
                     </tr>
                     <tr>
                         <td class="td-label">Duplicate Rows</td>
-                        <td class="td-value">23</td>
+                        <td class="td-value">-</td>
                     </tr>
                     <tr>
                         <td class="td-label">Duplicate Rows (%)</td>
-                        <td class="td-value">0.04%</td>
+                        <td class="td-value">-</td>
                     </tr>
                 </table>
             </div>
@@ -40,11 +40,11 @@
                 <table class="info-table">
                     <tr>
                         <td class="td-label">Numeric</td>
-                        <td class="td-value">3</td>
+                        <td class="td-value">-</td>
                     </tr>
                     <tr>
                         <td class="td-label">Categorical</td>
-                        <td class="td-value">9</td>
+                        <td class="td-value">-</td>
                     </tr>
 
                 </table>
@@ -53,18 +53,32 @@
 
         </div>
         <div class="missing-container">
+            <h3 class="info-sub-title missing-title">Missing Values</h3>
 
         </div>
         <div class="sample-container">
+            <h3 class="info-sub-title missing-title">Head</h3>
 
         </div>
 
     </div>
     <script>
-        const overview =JSON.parse('{{overview | tojson | safe}}');;
-        console.log(overview);
+
+        const loadOverviewData = () => {
+            try {
+                const overview =JSON.parse('{{overview | tojson | safe}}');
+                return overview
+            } catch(err) {
+                console.log(`Data load failed with ${err}`);
+                return null
+            }
+        }
+
+        const overview = loadOverviewData();
 
     </script>
+    {{JSGlue.include()}}
+    <script src="{{url_for('static', filename='overview.js')}}"></script>
 
 
 

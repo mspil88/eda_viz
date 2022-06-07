@@ -155,7 +155,10 @@ color:#fff;
 .info-sub-title {
     font-family: arial;
     margin-top: 0.5em;
+}
 
+.missing-title {
+    margin-left: 20px;
 }
 
 table {

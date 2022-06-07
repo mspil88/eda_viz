@@ -1,4 +1,5 @@
 const tdValues = document.querySelectorAll(".td-value");
+const missingPlotElem = document.querySelector(".missing-container")
 
 const setOverviewTableValues = (tableValues, overviewObj) => {
 
@@ -20,4 +21,30 @@ const setOverviewTableValues = (tableValues, overviewObj) => {
     }
 }
 
+const barPlotTrace = (x, y) => {
+    return [{x: x,
+             y: y,
+             type: 'bar',
+             marker: {
+                color: 'rgba(219, 112, 147, 0.7)'}}]
+}
+
+const barPlotLayout = {
+    autosize: true,
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    showlegend:false,
+}
+
+const plotConfig = {responsive: true, displayModeBar: false}
+
+const createMissingValuePlot = (missingElem, overviewObj, barLayout, plotConfig) => {
+    const {x, y} = overviewObj.overview[3].missing_plot;
+    const barTrace = barPlotTrace(x, y);
+    Plotly.newPlot(missingElem, barTrace, barLayout, plotConfig);
+
+}
+
+
 setOverviewTableValues(tdValues, overview);
+createMissingValuePlot(missingPlotElem, overview, barPlotLayout, plotConfig);
