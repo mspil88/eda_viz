@@ -1,9 +1,13 @@
 from flask import Flask, request, session, make_response, render_template
+from flask_jsglue import JSGlue
 import pandas as pd
 import os
 
+
 app = Flask(__name__)
 
+jsglue = JSGlue()
+jsglue.init_app(app)
 
 @app.route("/")
 def index():
@@ -43,7 +47,7 @@ def overview():
      'Ticket',
      'Fare'],
     'y': [687, 177, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]}},
-  {'duplicates': {'num_duplicates': 0, 'proportion_duplicated': 0.0}},
+  {'duplicates': {'count': 0, 'proportion': 0.0}},
   {'head': {'PassengerId': {0: 1, 1: 2, 2: 3, 3: 4, 4: 5},
     'Survived': {0: 0, 1: 1, 2: 1, 3: 1, 4: 0},
     'Pclass': {0: 3, 1: 1, 2: 3, 3: 1, 4: 3},
@@ -69,7 +73,7 @@ def overview():
     'Pclass': {886: 2, 887: 1, 888: 3, 889: 1, 890: 3},
     'Name': {886: 'Montvila, Rev. Juozas',
      887: 'Graham, Miss. Margaret Edith',
-     888: 'Johnston, Miss. Catherine Helen "Carrie"',
+     888: 'Johnston, Miss. Catherine Helen Carrie',
      889: 'Behr, Mr. Karl Howell',
      890: 'Dooley, Mr. Patrick'},
     'Sex': {886: 'male',
