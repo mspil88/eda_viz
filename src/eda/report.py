@@ -141,7 +141,8 @@ class OverviewReport(Overview):
         self.duplicate = None
         self.variable_type_mapping = None
         self.variable_types = None
-        self.examples = None
+        self.head = None
+        self.tail = None
 
     def get_counts(self, df: pd.DataFrame):
         rows, columns = get_shape(df)
@@ -167,7 +168,8 @@ class OverviewReport(Overview):
     def retrieve_examples(self, df: pd.DataFrame):
         head = get_example(df, "head")
         tail = get_example(df, "tail")
-        self.examples = {"example": {"head": head.data, "tail": tail.data}}
+        self.head = {"head": head.data}
+        self.tail = {"tail": tail.data}
         return self
 
     def generate_summary(self, df:pd.DataFrame):
@@ -178,7 +180,8 @@ class OverviewReport(Overview):
                  self.missing,
                  self.missing_plot,
                  self.duplicates,
-                 self.examples,
+                 self.head,
+                 self.tail,
                  self.variable_type_mapping,
                  self.variable_types]
                 }
