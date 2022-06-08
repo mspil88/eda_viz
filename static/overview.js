@@ -1,5 +1,6 @@
 const tdValues = document.querySelectorAll(".td-value");
 const missingPlotElem = document.querySelector(".missing-container")
+const headTblElem = document.querySelector(".table-container-head");
 
 const setOverviewTableValues = (tableValues, overviewObj) => {
 
@@ -42,9 +43,35 @@ const createMissingValuePlot = (missingElem, overviewObj, barLayout, plotConfig)
     const {x, y} = overviewObj.overview[3].missing_plot;
     const barTrace = barPlotTrace(x, y);
     Plotly.newPlot(missingElem, barTrace, barLayout, plotConfig);
-
 }
+
+const renderSample = (overviewObj, parentElem, sampleType) => {
+    colNames = Object.keys(overviewObj.overview[5][sampleType]);
+    tableValues = Object.values(overviewObj.overview[5][sampleType]);
+    nrows = Object.values(Object.values(overviewObj.overview[5][sampleType])[1]).length;
+    const arrayIdx = Array.from(Array(nrows).keys())
+
+    let tblString = `<table class= sample-${sampleType}-tbl> <tr>`;
+
+    for(let i of colNames) {
+        tblString += `<th>${i}</th>`
+    }
+    tblString += `</tr>`
+    for(let i of arrayIdx) {
+        tblString += `<tr class=row row-${i}>`;
+        for(let j of tableValues) {
+            tblString += `<td>${j[i]}</td>`
+        }
+        tblString += `</tr>`;
+    }
+    tblString += `</table>`
+    console.log(tblString);
+    parentElem.innerHTML = tblString;
+}
+
+
 
 
 setOverviewTableValues(tdValues, overview);
 createMissingValuePlot(missingPlotElem, overview, barPlotLayout, plotConfig);
+renderSample(overview, headTblElem, "head");
