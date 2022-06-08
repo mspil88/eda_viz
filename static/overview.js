@@ -1,6 +1,8 @@
 const tdValues = document.querySelectorAll(".td-value");
 const missingPlotElem = document.querySelector(".missing-container")
 const headTblElem = document.querySelector(".table-container-head");
+const tailTblElem = document.querySelector(".table-container-tail");
+
 
 const setOverviewTableValues = (tableValues, overviewObj) => {
 
@@ -46,11 +48,26 @@ const createMissingValuePlot = (missingElem, overviewObj, barLayout, plotConfig)
 }
 
 const renderSample = (overviewObj, parentElem, sampleType) => {
-    colNames = Object.keys(overviewObj.overview[5][sampleType]);
-    tableValues = Object.values(overviewObj.overview[5][sampleType]);
-    nrows = Object.values(Object.values(overviewObj.overview[5][sampleType])[1]).length;
-    const arrayIdx = Array.from(Array(nrows).keys())
 
+    objIdx = sampleType == "head" ? 5 : 6;
+    console.log(objIdx);
+    colNames = Object.keys(overviewObj.overview[objIdx][sampleType]);
+    tableValues = Object.values(overviewObj.overview[objIdx][sampleType]);
+    console.log(tableValues);
+    nrows = Object.values(Object.values(overviewObj.overview[objIdx][sampleType])[1]).length;
+    console.log(nrows);
+    var arrayIdx = [];
+
+    if(sampleType == "head") {
+        var arrayIdx = Array.from(Array(nrows).keys())
+    }
+    else {
+        const firstValue = parseInt(Object.keys(Object.values(overviewObj.overview[objIdx]["tail"])[1])[0]);
+        var arrayIdx = [];
+        for(let i=0; i < nrows; i++) {
+            arrayIdx.push(firstValue+i);
+        }
+    }
     let tblString = `<table class= sample-${sampleType}-tbl> <tr>`;
 
     for(let i of colNames) {
@@ -60,6 +77,7 @@ const renderSample = (overviewObj, parentElem, sampleType) => {
     for(let i of arrayIdx) {
         tblString += `<tr class=row row-${i}>`;
         for(let j of tableValues) {
+            console.log(j)
             tblString += `<td>${j[i]}</td>`
         }
         tblString += `</tr>`;
@@ -75,3 +93,4 @@ const renderSample = (overviewObj, parentElem, sampleType) => {
 setOverviewTableValues(tdValues, overview);
 createMissingValuePlot(missingPlotElem, overview, barPlotLayout, plotConfig);
 renderSample(overview, headTblElem, "head");
+renderSample(overview, tailTblElem, "tail");
