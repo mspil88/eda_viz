@@ -108,3 +108,7 @@ def overview():
   {'mapped_type_count': {'numeric': 3, 'categorical': 9}}]}
     return render_template("overview.html", overview=over)
 
+@app.route("/variables")
+def variables():
+    print("accessing variable route")
+    return render_template("variables.html")
