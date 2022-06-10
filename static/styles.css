@@ -182,6 +182,7 @@ tr, td {
 td {
     padding-top: 10px;
     padding-bottom: 10px;
+
 }
 
 .td-label {
@@ -238,7 +239,8 @@ tr:hover {
     margin-left: 20%;
     margin-right: 20%;
     margin-top: 2%;
-    height: 100px;
+    height: 150px;
+
     /*border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 2px;*/
 
@@ -331,4 +333,64 @@ input[type="radio"]{
 #option-1:checked:checked ~ .option-1 span,
 #option-2:checked:checked ~ .option-2 span{
   color: #fff;
+}
+
+.variable-container {
+    border: 1px solid black;
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-evenly;*/
+}
+
+.variable-sub-container {
+    border-right: 1px solid black;
+}
+
+.variable-name {
+    font-family: arial;
+    margin-left: 5px;
+}
+
+.var-overview {
+    border: 1px solid black;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    height: 30px;
+    border-radius: 5px;
+    font-family: arial;
+    padding: 10px 10px 10px 10px;
+}
+
+.var-overview:hover {
+    background: #212121;
+    color: white;
+}
+
+.var-sum {
+    width: 20%;
+}
+
+.var-sum-2 {
+    width: 27%;
+}
+
+.var-sum-3 {
+    width: 27%;
+}
+
+.var-sum-4 {
+    width: 27%;
+}
+
+.variable-table {
+    margin-top: 10%;
+
+}
+
+.td-label-var, .td-value-var {
+    font-size: 10px;
 }

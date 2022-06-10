@@ -317,4 +317,4 @@ def variables():
     for i in range(len(obj)):
         keys.append(list(obj[i].keys())[0])
 
-    return render_template("variables.html", keys=keys)
+    return render_template("variables.html", keys=keys, obj=obj)

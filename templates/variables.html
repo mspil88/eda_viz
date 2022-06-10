@@ -1,4 +1,106 @@
 {% extends "base_template.html" %}
 {% block main %}
-<h1>TEST VARIABLE ROUTE</h1>
+    <div class="variable-view-controller">
+        <h3 class="variable-title">Select view</h3>
+        <div class="wrapper">
+             <input type="radio" name="select" id="option-1" checked>
+             <input type="radio" name="select" id="option-2">
+               <label for="option-1" class="option option-1">
+             <div class="dot"></div>
+              <span>Single</span>
+              </label>
+           <label for="option-2" class="option option-2">
+             <div class="dot"></div>
+              <span>Multiple</span>
+           </label>
+        </div>
+
+        <select class="variable-select" name="variable" onchange="selectOnChange(this)">
+            {% for key in keys %}
+                <option value={{key}}>{{key}}</option>
+            {% endfor %}
+        </select>
+
+    </div>
+
+    <div class="variable-container">
+        <div class="variable-sub-container var-sum">
+            <h3 class="variable-name"></h3>
+            <div class="var-overview overview">Overview</div>
+            <div class="var-overview stats">Stats</div>
+        </div>
+        <div class="variable-sub-container var-sum-2">
+            <table class="variable-table">
+                <tr>
+                    <td class="td-label td-label-var">Distinct</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Distinct (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="variable-sub-container var-sum-3">
+            <table class="variable-table">
+                <tr>
+                    <td class="td-label td-label-var">Mean</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Min</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Max</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">SD</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+
+            </table>
+        </div>
+        <div class="variable-sub-container var-sum-4">
+            stuff4
+        </div>
+    </div>
+    <script>
+        const loadData = () => {
+            try {
+                const variables =JSON.parse('{{obj | tojson | safe}}');
+                return variables
+            } catch(err) {
+                console.log(`Data load failed with ${err}`);
+                return null
+            }
+        }
+
+        const variables = loadData();
+    </script>
+    {{JSGlue.include()}}
+    <script src="{{url_for('static', filename='variables.js')}}"></script>
+
+
+
+
 {% endblock %}
