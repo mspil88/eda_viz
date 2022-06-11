@@ -37,6 +37,7 @@ const barPlotLayout = {
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
     showlegend:false,
+
 }
 
 const plotConfig = {responsive: true, displayModeBar: false}

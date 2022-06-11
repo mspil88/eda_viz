@@ -8,7 +8,7 @@ def histogram_values(column: pd.Series, **kwargs) -> dict:
         histogram = np.histogram(column[~check_nans], **kwargs)
     else:
         histogram = np.histogram(column, **kwargs)
-    return {"distribution": {"x": list(histogram[1]), "y": list(histogram[0])}}
+    return {"distribution": {"x": list(histogram[1][:-1]), "y": list(histogram[0])}}
 
 
 def frequency_values(column: pd.Series) -> dict:
