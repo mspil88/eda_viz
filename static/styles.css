@@ -272,8 +272,8 @@ tr:hover {
   justify-content: space-evenly;
   border-radius: 5px;
   padding: 5px 15px;
-
 }
+
 .wrapper .option{
   background: #fff;
   height: 100%;
@@ -332,6 +332,80 @@ input[type="radio"]{
 }
 #option-1:checked:checked ~ .option-1 span,
 #option-2:checked:checked ~ .option-2 span{
+  color: #fff;
+}
+
+.wrapper-data-sel{
+  display: block-flex;
+  height: 30px;
+  width: 270px;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.wrapper-data-sel .option{
+  background: #fff;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0 10px;
+  border: 2px solid lightgrey;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+.wrapper-data-sel .option .dot{
+  height: 20px;
+  width: 20px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  position: relative;
+}
+
+.wrapper-data-sel .option .dot::before{
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background: #212121;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+
+
+#option-overview:checked:checked ~ .option-overview,
+#option-stats:checked:checked ~ .option-stats{
+  border-color: #212121;
+  background: #212121;
+}
+#option-overview:checked:checked ~ .option-overview .dot,
+#option-stats:checked:checked ~ .option-stats .dot{
+  background: #fff;
+}
+#option-overview:checked:checked ~ .option-overview .dot::before,
+#option-stats:checked:checked ~ .option-stats .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.wrapper-data-sel .option span{
+  font-family: arial;
+  font-size: 10px;
+  color: #808080;
+}
+#option-overview:checked:checked ~ .option-overview span,
+#option-stats:checked:checked ~ .option-stats span{
   color: #fff;
 }
 
