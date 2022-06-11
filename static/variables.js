@@ -3,10 +3,11 @@ const multiView = document.querySelector("#option-2");
 const variableSelect = document.querySelector(".variable-select");
 const variableName = document.querySelector(".variable-name");
 const tdValue = document.querySelectorAll(".td-value");
+const wrapperDataSel = document.querySelector(".wrapper-data-sel")
 
 let viewState = "single"
 
-const toggleVariableSelect = (elem, visibility) => {
+const toggleElemVisibility = (elem, visibility) => {
     elem.style.visibility = visibility
 }
 
@@ -14,7 +15,7 @@ singleView.addEventListener("click", ()=> {
     if(viewState !== "single") {
         console.log("option-1 clicked");
         viewState = "single";
-        toggleVariableSelect(variableSelect, "visible")
+        toggleElemVisibility(variableSelect, "visible")
    };
 })
 
@@ -22,7 +23,7 @@ multiView.addEventListener("click", ()=> {
     if(viewState !== "multi"){
         console.log("option-2 clicked")
         viewState = "multi";
-        toggleVariableSelect(variableSelect, "hidden")
+        toggleElemVisibility(variableSelect, "hidden")
     };
 })
 
@@ -66,6 +67,7 @@ const setOverviewValues = (variableObj, variable, tableValues) => {
 function selectOnChange(val) {
     console.log(val.value);
     variableName.textContent = val.value;
+    toggleElemVisibility(wrapperDataSel, "visible")
     setOverviewValues(variables, val.value, tdValue)
 
 }

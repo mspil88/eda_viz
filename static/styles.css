@@ -343,6 +343,7 @@ input[type="radio"]{
   justify-content: space-evenly;
   border-radius: 5px;
   padding: 5px 15px;
+  visibility: hidden;
 }
 
 .wrapper-data-sel .option{
