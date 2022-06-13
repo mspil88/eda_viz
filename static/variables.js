@@ -7,7 +7,7 @@ const wrapperDataSel = document.querySelector(".wrapper-data-sel")
 const distPlotDiv = document.querySelector(".var-sum-4");
 
 const variableContainer = document.querySelector(".variable-container");
-
+const mainWindow = document.querySelector(".main-container");
 
 let viewState = "single"
 
@@ -179,3 +179,80 @@ class VariableView {
     }
 }
 
+const createVariableDiv = (n) => {
+    div = document.createElement("div");
+    div.className = `variable-container ${n}`
+    const s = `<div class="variable-sub-container var-sum">
+            <h3 class="variable-name"></h3>
+            <div class="wrapper-data-sel">
+            <input type="radio" name="select-2" id="option-overview" checked>
+             <input type="radio" name="select-2" id="option-stats">
+               <label for="option-overview" class="option option-overview">
+             <div class="dot"></div>
+              <span>Overview</span>
+              </label>
+           <label for="option-stats" class="option option-stats">
+             <div class="dot"></div>
+              <span>Stats</span>
+           </label>
+        </div>
+        </div>
+        <div class="variable-sub-container var-sum-2">
+            <table class="variable-table">
+                <tr>
+                    <td class="td-label td-label-var">Distinct</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Distinct (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="variable-sub-container var-sum-3">
+            <table class="variable-table">
+                <tr>
+                    <td class="td-label td-label-var">Mean</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Min</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Max</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">SD</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+
+            </table>
+        </div>
+
+        <div class="variable-sub-container var-sum-4">
+
+
+        </div>`
+    div.innerHTML = s;
+    mainWindow.append(div);
+}

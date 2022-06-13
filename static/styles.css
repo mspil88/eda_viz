@@ -414,6 +414,7 @@ input[type="radio"]{
     border: 1px solid black;
     margin-left: 20%;
     margin-right: 20%;
+    margin-bottom: 10px;
     height: 250px;
     display: flex;
     flex-direction: row;
