@@ -6,6 +6,9 @@ const tdValue = document.querySelectorAll(".td-value");
 const wrapperDataSel = document.querySelector(".wrapper-data-sel")
 const distPlotDiv = document.querySelector(".var-sum-4");
 
+const variableContainer = document.querySelector(".variable-container");
+
+
 let viewState = "single"
 
 const toggleElemVisibility = (elem, visibility) => {
@@ -102,11 +105,77 @@ const setOverviewValues = (variableObj, variable, tableValues) => {
     createDistributionPlot(distPlotDiv, x, y, barPlotLayout, plotConfig);
 }
 
-
 function selectOnChange(val) {
     console.log(val.value);
-    variableName.textContent = val.value;
-    toggleElemVisibility(wrapperDataSel, "visible");
-    setOverviewValues(variables, val.value, tdValue);
 
+    const vv = new VariableView(variableContainer, val.value, variables)
+    vv.createVariableView(variables);
+    toggleElemVisibility(wrapperDataSel, "visible");
 }
+
+class VariableView {
+    constructor(root, variable, variableObj) {
+        this.root = root;
+        this.variable = variable;
+        this.variableData = []
+
+        this.elem = {
+            varName: root.querySelector(".variable-name"),
+            tableValues: root.querySelectorAll(".td-value"),
+            chartContainer: root.querySelector(".var-sum-4"),
+        }
+
+
+    };
+
+    setVarName() {
+        this.elem.varName.innerHTML = this.variable;
+        return this;
+    }
+
+    getVariableData(variableObj) {
+        for(let i of variableObj) {
+            if(Object.keys(i) == this.variable) {
+                this.variableData.push(...Object.values(i))
+            }
+        }
+        return this;
+    }
+
+    unpackKeyValues() {
+        const missing = this.variableData[0][0].missing.count;
+        const missingProportion = this.variableData[0][0].missing.proportion;
+        const distinct = this.variableData[0][1].distinct.count;
+        const distinctProportion = this.variableData[0][1].distinct.proportion;
+        const zero = this.variableData[0][2].zeros.count;
+        const zeroProportion = this.variableData[0][2].zeros.proportion;
+        const mean = this.variableData[0][5].stats.mean
+        const min = this.variableData[0][5].stats.min
+        const max = this.variableData[0][5].stats.max
+        const std = this.variableData[0][5].stats.std
+        const x = this.variableData[0][4].distribution.x
+        const y = this.variableData[0][4].distribution.y
+
+        return [[distinct, distinctProportion, missing, missingProportion, zero, zeroProportion,
+                mean, min, max, std], [x, y]]
+        }
+
+    setOverviewTableValues() {
+        const _zip = (x, y) => Array(Math.max(x.length, y.length)).fill().map((_, i) => [x[i], y[i]]);
+        const [valueArray, plotValues] = this.unpackKeyValues(this.variableData);
+        const [x, y] = plotValues
+
+        Plotly.purge(distPlotDiv);
+        createDistributionPlot(distPlotDiv, x, y, barPlotLayout, plotConfig);
+
+        for(let [i, j] of _zip(this.elem.tableValues, valueArray)) {
+           i.innerHTML = j;
+        }
+    return this;
+    }
+
+    createVariableView(variableObj) {
+        this.setVarName().getVariableData(variableObj).setOverviewTableValues();
+    }
+}
+
