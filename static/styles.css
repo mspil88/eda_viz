@@ -411,7 +411,9 @@ input[type="radio"]{
 }
 
 .variable-container {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
+
+    border-bottom: 1px solid black;
     margin-left: 20%;
     margin-right: 20%;
     margin-bottom: 10px;
@@ -422,7 +424,7 @@ input[type="radio"]{
 }
 
 .variable-sub-container {
-    border-right: 1px solid black;
+    /*border-right: 1px solid black;*/
 }
 
 .variable-name {
