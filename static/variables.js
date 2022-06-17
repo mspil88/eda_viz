@@ -149,8 +149,8 @@ const createVariableDiv = (variable) => {
     const s = `<div class="variable-sub-container var-sum">
             <h3 class="variable-name"></h3>
             <div class="wrapper-data-sel">
-            <input type="radio" name="select-2" id="option-overview" checked>
-             <input type="radio" name="select-2" id="option-stats">
+            <input type="radio" name="select-${variable}" id="option-overview" checked>
+             <input type="radio" name="select-${variable}" id="option-stats">
                <label for="option-overview" class="option option-overview">
              <div class="dot"></div>
               <span>Overview</span>
@@ -301,3 +301,5 @@ const renderMultiple = () => {
         vv.createVariableView(variables);
         varViews.push({_var: variable, instance: vv});
 }}
+
+
