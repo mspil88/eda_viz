@@ -46,12 +46,17 @@ class VariableReport(ABC):
 class NumericVariableReport(VariableReport):
     def __init__(self, name):
         self.name = name
+        self.dtype = None
         self.missing = None
         self.distinct = None
         self.zeros = None
         self.examples = None
         self.distribution = None
         self.stats = None
+
+    def set_dtype(self):
+        self.dtype = {"data_type": "numeric"}
+        return self
 
     def _output_builder(self, func: Callable, column: pd.Series, name: str):
         return func(column)
@@ -85,10 +90,11 @@ class NumericVariableReport(VariableReport):
 
     def generate_summary(self, column: pd.Series):
         self.calculate_missing(column).calculate_distinct(column).calculate_zeros(column)\
-            .retrieve_example(column).calculate_distribution(column).calculate_stats(column)
+            .retrieve_example(column).calculate_distribution(column).calculate_stats(column).set_dtype()
 
         return {self.name:
-                    [self.missing,
+                    [self.dtype,
+                     self.missing,
                      self.distinct,
                      self.zero,
                      self.examples,
@@ -97,6 +103,11 @@ class NumericVariableReport(VariableReport):
 
 
 class CategoricalVariableReport(NumericVariableReport):
+
+    def set_dtype(self):
+        self.dtype = {"data_type": "categorical"}
+        return self
+
     def calculate_stats(self, column: pd.Series):
         self.stats = categorical_statistics(column)
         return self
