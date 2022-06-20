@@ -131,12 +131,22 @@ const setOverviewValues = (variableObj, variable, tableValues) => {
 }
 
 function selectOnChange(val) {
-    console.log(val.value);
+    console.log(dataTypeMap[val.value]);
     removeVariableContainer();
-    createVariableDiv(val.value);
-    const variableDiv = document.querySelector(`.vc-${val.value}`);
-    const vv = new VariableView(variableDiv, val.value, variables);
-    vv.createVariableView(variables);
+
+    const data_type = dataTypeMap[val.value];
+    if(data_type === "numeric") {
+        createVariableDiv(val.value);
+        const variableDiv = document.querySelector(`.vc-${val.value}`);
+        const vv = new VariableView(variableDiv, val.value, variables);
+        vv.createVariableView(variables);
+    } else if (data_type === "categorical") {
+        createCategoricalVariableDiv(val.value);
+        const variableDiv = document.querySelector(`.vc-${val.value}`);
+        const vv = new CategoricalVariableView(variableDiv, val.value, variables);
+        vv.createVariableView(variables);
+    }
+
 //    const vv = new VariableView(variableContainer, val.value, variables)
 //    vv.createVariableView(variables);
     toggleElemVisibility(wrapperDataSel, "visible");
@@ -221,6 +231,74 @@ const createVariableDiv = (variable) => {
     mainWindow.append(div);
 }
 
+const createCategoricalVariableDiv = (variable) => {
+    div = document.createElement("div");
+    div.className = `variable-container vc-${variable}`
+    const s = `<div class="variable-sub-container var-sum">
+            <h3 class="variable-name"></h3>
+            <div class="wrapper-data-sel">
+            <input type="radio" name="select-${variable}" id="option-overview" checked>
+             <input type="radio" name="select-${variable}" id="option-stats">
+               <label for="option-overview" class="option option-overview">
+             <div class="dot"></div>
+              <span>Overview</span>
+              </label>
+           <label for="option-stats" class="option option-stats">
+             <div class="dot"></div>
+              <span>Stats</span>
+           </label>
+        </div>
+        </div>
+        <div class="variable-sub-container var-sum-2">
+            <table class="variable-table">
+                <tr>
+                    <td class="td-label td-label-var">Distinct</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Distinct (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros (%)</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="variable-sub-container var-sum-3">
+            <table class="variable-table">
+                <tr>
+                    <td class="td-label td-label-var">Mode</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Entropy</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="variable-sub-container var-sum-${variable}">
+
+
+        </div>`
+    div.innerHTML = s;
+    mainWindow.append(div);
+}
 
 
 class VariableView {
@@ -289,17 +367,52 @@ class VariableView {
         this.setVarName().getVariableData(variableObj).setOverviewTableValues();
     }
 }
+
+class CategoricalVariableView extends VariableView {
+    constructor(root, variable, variableObj) {
+        super(root, variable, variableObj);
+    }
+
+    unpackKeyValues() {
+        const missing = this.variableData[0][0].missing.count;
+        const missingProportion = this.variableData[0][0].missing.proportion;
+        const distinct = this.variableData[0][1].distinct.count;
+        const distinctProportion = this.variableData[0][1].distinct.proportion;
+        const zero = this.variableData[0][2].zeros.count;
+        const zeroProportion = this.variableData[0][2].zeros.proportion;
+        const mode = this.variableData[0][5].stats.mode
+        const entropy = this.variableData[0][5].stats.entropy
+        const x = this.variableData[0][4].distribution.x
+        const y = this.variableData[0][4].distribution.y
+
+
+        return [[distinct, distinctProportion, missing, missingProportion, zero, zeroProportion,
+                mode, entropy], [x, y]]
+        }
+
+}
+
 varViews = []
 const renderMultiple = () => {
 
     for(let i of variables) {
         variable = Object.keys(i)[0];
         console.log(variable);
-        createVariableDiv(variable);
-        const variableDiv = document.querySelector(`.vc-${variable}`);
-        const vv = new VariableView(variableDiv, variable, variables);
-        vv.createVariableView(variables);
-        varViews.push({_var: variable, instance: vv});
+        const data_type = dataTypeMap[variable];
+        if(data_type === "numeric") {
+            createVariableDiv(variable);
+            const variableDiv = document.querySelector(`.vc-${variable}`);
+            const vv = new VariableView(variableDiv, variable, variables);
+            vv.createVariableView(variables);
+            varViews.push({_var: variable, instance: vv});
+        } else if (data_type === "categorical") {
+            createCategoricalVariableDiv(variable);
+            const variableDiv = document.querySelector(`.vc-${variable}`);
+            const vv = new CategoricalVariableView(variableDiv, variable, variables);
+            vv.createVariableView(variables);
+            varViews.push({_var: variable, instance: vv});
+        }
+
 }}
 
 

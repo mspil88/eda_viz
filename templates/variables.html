@@ -97,9 +97,9 @@
 <!--        </div>-->
 <!--    </div>-->
     <script>
-        const loadData = () => {
+        const loadData = (data) => {
             try {
-                const variables =JSON.parse('{{obj | tojson | safe}}');
+                const variables =JSON.parse(data);
                 return variables
             } catch(err) {
                 console.log(`Data load failed with ${err}`);
@@ -107,7 +107,8 @@
             }
         }
 
-        const variables = loadData();
+        const variables = loadData('{{obj | tojson | safe}}');
+        const dataTypeMap = loadData('{{_map | tojson | safe}}');
     </script>
     {{JSGlue.include()}}
     <script src="{{url_for('static', filename='variables.js')}}"></script>
