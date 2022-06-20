@@ -111,7 +111,8 @@ def overview():
 @app.route("/variables")
 def variables():
     print("accessing variable route")
-    obj = [{'PassengerId': [{'missing': {'count': 0, 'proportion': 0.0}},
+    obj = [{'PassengerId': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 891, 'proportion': 1.0}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': [878, 723, 562, 742, 210, 219, 643, 860, 635]},
@@ -139,20 +140,27 @@ def variables():
      'IQR': 445.0,
      'skew': 0.0,
      'kurtosis': -1.1999999999999997,
-     'sum': 397386}}]},
- {'Survived': [{'missing': {'count': 0, 'proportion': 0.0}},
+     'sum': 397386}},
+    {'data_type': 'numeric'}]},
+ {'Survived': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 2, 'proportion': 0.002244668911335578}},
    {'zeros': {'count': 549, 'proportion': 0.6161616161616161}},
    {'example': [0, 1, 0, 0, 1, 0, 0, 0, 0]},
    {'distribution': {'x': [0, 1], 'y': [549, 342]}},
-   {'stats': {'mode': 0, 'entropy': 0.6659119735267652}}]},
- {'Pclass': [{'missing': {'count': 0, 'proportion': 0.0}},
+   {'stats': {'mode': 0, 'entropy': 0.6659119735267652}},
+     {'data_type': 'categorical'},
+ ]},
+ {'Pclass': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 3, 'proportion': 0.003367003367003367}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': [3, 3, 2, 3, 3, 3, 3, 2, 3]},
    {'distribution': {'x': [3, 1, 2], 'y': [491, 216, 184]}},
-   {'stats': {'mode': 3, 'entropy': 0.9976616191577423}}]},
- {'Name': [{'missing': {'count': 0, 'proportion': 0.0}},
+   {'stats': {'mode': 3, 'entropy': 0.9976616191577423}},
+    {'data_type': 'categorical'},]},
+ {'Name': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 891, 'proportion': 1.0}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': ['Arnold-Franchi, Mrs. Josef (Josefine Franchi)',
@@ -171,8 +179,10 @@ def variables():
       'Murdlin, Mr. Joseph',
       'other'],
      'y': [1, 1, 1, 1, 1, 886]}},
-   {'stats': {'mode': 'Abbing, Mr. Anthony', 'entropy': 6.792344427470811}}]},
- {'Sex': [{'missing': {'count': 0, 'proportion': 0.0}},
+   {'stats': {'mode': 'Abbing, Mr. Anthony', 'entropy': 6.792344427470811}},
+           {'data_type': 'categorical'}]},
+ {'Sex': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 2, 'proportion': 0.002244668911335578}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': ['female',
@@ -185,8 +195,10 @@ def variables():
      'male',
      'female']},
    {'distribution': {'x': ['male', 'female'], 'y': [577, 314]}},
-   {'stats': {'mode': 'male', 'entropy': 0.6489276088957644}}]},
- {'Age': [{'missing': {'count': 177, 'proportion': 0.19865319865319866}},
+   {'stats': {'mode': 'male', 'entropy': 0.6489276088957644}},
+    {'data_type': 'categorical'}]},
+ {'Age': [
+   {'missing': {'count': 177, 'proportion': 0.19865319865319866}},
    {'distinct': {'count': 88, 'proportion': 0.09876543209876543}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': [22.0, 19.0, 29.0, 4.0, 45.0, 18.0, 25.0, 34.0, 49.0]},
@@ -214,22 +226,28 @@ def variables():
      'IQR': 17.875,
      'skew': 0.38910778230082704,
      'kurtosis': 0.17827415364210353,
-     'sum': 21205.17}}]},
- {'SibSp': [{'missing': {'count': 0, 'proportion': 0.0}},
+     'sum': 21205.17}},
+    {'data_type': 'numeric'}]},
+ {'SibSp': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 7, 'proportion': 0.007856341189674524}},
    {'zeros': {'count': 608, 'proportion': 0.6823793490460157}},
    {'example': [0, 0, 0, 0, 1, 0, 0, 2, 0]},
    {'distribution': {'x': [0, 1, 2, 4, 3, 'other'],
      'y': [608, 209, 28, 18, 16, 12]}},
-   {'stats': {'mode': 0, 'entropy': 0.9278185183972899}}]},
- {'Parch': [{'missing': {'count': 0, 'proportion': 0.0}},
+   {'stats': {'mode': 0, 'entropy': 0.9278185183972899}},
+    {'data_type': 'categorical'}]},
+ {'Parch': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 7, 'proportion': 0.007856341189674524}},
    {'zeros': {'count': 678, 'proportion': 0.7609427609427609}},
    {'example': [1, 0, 0, 0, 0, 0, 1, 1, 2]},
    {'distribution': {'x': [0, 1, 2, 5, 3, 'other'],
      'y': [678, 118, 80, 5, 5, 5]}},
-   {'stats': {'mode': 0, 'entropy': 0.7821038727533371}}]},
- {'Ticket': [{'missing': {'count': 0, 'proportion': 0.0}},
+   {'stats': {'mode': 0, 'entropy': 0.7821038727533371}},
+    {'data_type': 'categorical'}]},
+ {'Ticket': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 681, 'proportion': 0.7643097643097643}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': ['112059',
@@ -248,8 +266,10 @@ def variables():
       'CA 2144',
       'other'],
      'y': [7, 7, 7, 6, 6, 858]}},
-   {'stats': {'mode': '1601', 'entropy': 6.399828873350447}}]},
- {'Fare': [{'missing': {'count': 0, 'proportion': 0.0}},
+   {'stats': {'mode': '1601', 'entropy': 6.399828873350447}},
+    {'data_type': 'categorical'}]},
+ {'Fare': [
+   {'missing': {'count': 0, 'proportion': 0.0}},
    {'distinct': {'count': 248, 'proportion': 0.2783389450056117}},
    {'zeros': {'count': 15, 'proportion': 0.016835016835016835}},
    {'example': [90.0,
@@ -285,8 +305,10 @@ def variables():
      'IQR': 23.0896,
      'skew': 4.787316519674893,
      'kurtosis': 33.39814088089868,
-     'sum': 28693.9493}}]},
- {'Cabin': [{'missing': {'count': 687, 'proportion': 0.7710437710437711}},
+     'sum': 28693.9493}},
+    {'data_type': 'numeric'}]},
+ {'Cabin': [
+   {'missing': {'count': 687, 'proportion': 0.7710437710437711}},
    {'distinct': {'count': 147, 'proportion': 0.16498316498316498}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': ['E36',
@@ -305,16 +327,28 @@ def variables():
       'F33',
       'other'],
      'y': [4, 4, 4, 3, 3, 186]}},
-   {'stats': {'mode': 'B96 B98', 'entropy': 4.897561648814725}}]},
- {'Embarked': [{'missing': {'count': 2, 'proportion': 0.002244668911335578}},
+   {'stats': {'mode': 'B96 B98', 'entropy': 4.897561648814725}},
+    {'data_type': 'categorical'}]},
+ {'Embarked': [
+   {'missing': {'count': 2, 'proportion': 0.002244668911335578}},
    {'distinct': {'count': 3, 'proportion': 0.003367003367003367}},
    {'zeros': {'count': 0, 'proportion': 0.0}},
    {'example': ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'Q', 'S']},
    {'distribution': {'x': ['S', 'C', 'Q'], 'y': [644, 168, 77]}},
-   {'stats': {'mode': 'S', 'entropy': 0.7602918973432804}}]}]
+   {'stats': {'mode': 'S', 'entropy': 0.7602918973432804}},
+   {'data_type': 'categorical'}]}]
 
     keys = []
     for i in range(len(obj)):
         keys.append(list(obj[i].keys())[0])
 
-    return render_template("variables.html", keys=keys, obj=obj)
+    _map = {}
+
+    for i in range(len(obj)):
+        k = list(obj[i].keys())[0]
+        if k != "overview":
+            _map[k] = obj[i][k][6]["data_type"]
+
+
+
+    return render_template("variables.html", keys=keys, obj=obj, _map=_map)
