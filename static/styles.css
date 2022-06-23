@@ -308,6 +308,10 @@ tr:hover {
   transform: scale(1.5);
   transition: all 0.3s ease;
 }
+
+
+
+
 input[type="radio"]{
   display: none;
 }
@@ -410,6 +414,33 @@ input[type="radio"]{
   color: #fff;
 }
 
+.overview-btn, .stats-btn {
+  border-radius: 5px;
+  justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-family: arial;
+  height: 30px;
+  width: 90px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.overview-btn {
+    background: #212121;
+}
+
+.stats-btn {
+    background: #fff;
+    color: #808080;
+    border: 2px solid lightgrey;
+}
+
+
+
+
+
 .variable-container {
     /*border: 1px solid black;*/
 
@@ -422,6 +453,7 @@ input[type="radio"]{
     flex-direction: row;
     /*justify-content: space-evenly;*/
 }
+
 
 .variable-sub-container {
     /*border-right: 1px solid black;*/

@@ -160,16 +160,8 @@ const createVariableDiv = (variable) => {
             <h3 class="variable-name"></h3>
             <h4 class="variable-type"></h4>
             <div class="wrapper-data-sel">
-            <input type="radio" name="select-${variable}" id="option-overview" checked>
-             <input type="radio" name="select-${variable}" id="option-stats">
-               <label for="option-overview" class="option option-overview">
-             <div class="dot"></div>
-              <span>Overview</span>
-              </label>
-           <label for="option-stats" class="option option-stats">
-             <div class="dot"></div>
-              <span>Stats</span>
-           </label>
+            <button class="overview-btn overview-${variable}"><span><div class="dot"></div>Overview</span></button>
+            <button class="stats-btn stats-${variable}"><span><div class="dot"></div>Stats</span></button>
         </div>
         </div>
         <div class="variable-sub-container var-sum-2">
@@ -239,16 +231,8 @@ const createCategoricalVariableDiv = (variable) => {
             <h3 class="variable-name"></h3>
             <h4 class="variable-type"></h4>
             <div class="wrapper-data-sel">
-            <input type="radio" name="select-${variable}" id="option-overview" checked>
-             <input type="radio" name="select-${variable}" id="option-stats">
-               <label for="option-overview" class="option option-overview">
-             <div class="dot"></div>
-              <span>Overview</span>
-              </label>
-           <label for="option-stats" class="option option-stats">
-             <div class="dot"></div>
-              <span>Stats</span>
-           </label>
+            <button class="overview-btn overview-${variable}"><span><div class="dot"></div>Overview</span></button>
+            <button class="stats-btn stats-${variable}"><span><div class="dot"></div>Stats</span></button>
         </div>
         </div>
         <div class="variable-sub-container var-sum-2">
@@ -401,6 +385,9 @@ class CategoricalVariableView extends VariableView {
 
 }
 
+var varBtns = [];
+var varEventListeners = [];
+
 varViews = []
 const renderMultiple = () => {
 
@@ -421,8 +408,20 @@ const renderMultiple = () => {
             const vv = new CategoricalVariableView(variableDiv, variable, variables, data_type);
             vv.createVariableView(variables);
             varViews.push({_var: variable, instance: vv});
-        }
+    }}
+    varBtns = Array.from(document.querySelectorAll(".overview-btn"));
+    varBtns.forEach((btn) => {
+        const btnClass = btn.className.split(" ")[1];
+        const individualBtn = document.querySelector(`.${btnClass}`);
+        individualBtn.addEventListener("click", event=> {
+            console.log(`clicked ${event.target.className}`)
+            event.target.className.style.backgroundColor = "pink";
+            ;
+        })
+    });
 
-}}
+}
+
+
 
 
