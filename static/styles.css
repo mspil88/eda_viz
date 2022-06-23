@@ -432,6 +432,14 @@ input[type="radio"]{
     margin-left: 5px;
 }
 
+.variable-type {
+    font-family: arial;
+    margin-left: 5px;
+    font-weight: normal;
+    color: gray;
+    text-transform: capitalize;
+}
+
 .var-overview {
     border: 1px solid black;
     margin-left: 20%;
