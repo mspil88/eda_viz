@@ -331,6 +331,18 @@ const statsTable = (variable) => {
             </table>`]
 }
 
+const statsTableCat = (variable) => {
+    return [`<table class="variable-table v1-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Mode</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Entropy</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>`, '']
+}
+
 const overviewTableCat = (variable) => {
     return [`<table class="variable-table v1-${variable}">
                 <tr>
@@ -491,7 +503,12 @@ class VariableView {
             toggleOff(this.elem.overviewBtn);
             this.elem.tableV1.remove();
             this.elem.tableV2.remove();
-            const [tbl1, tbl2] = statsTable(this.variable);
+
+            if(this.dtype === "numeric") {
+                var [tbl1, tbl2] = statsTable(this.variable);
+            } else if(this.dtype === "categorical") {
+                var [tbl1, tbl2] = statsTableCat(this.variable);
+            }
             this.elem.tableContainer1.innerHTML=tbl1;
             this.elem.tableContainer2.innerHTML=tbl2;
             this.setTableValues("stats");
@@ -536,20 +553,29 @@ class VariableView {
         }
 
     unpackStatsValues() {
-        const mean = this.variableData[0][5].stats.mean
-        const std = this.variableData[0][5].stats.std
-        const min = this.variableData[0][5].stats.min
-        const q25 = this.variableData[0][5].stats.Q25
-        const median = this.variableData[0][5].stats.median
-        const q75 = this.variableData[0][5].stats.Q75
-        const max = this.variableData[0][5].stats.max
-        const range = this.variableData[0][5].stats.range
-        const iqr = this.variableData[0][5].stats.IQR
-        const skew = this.variableData[0][5].stats.skew
-        const kurtosis = this.variableData[0][5].stats.kurtosis
-        const sum = this.variableData[0][5].stats.sum
 
-        return [mean, std, min, q25, median, q75, max, range, iqr, skew, kurtosis, sum]
+        if(this.dtype === "numeric"){
+            const mean = this.variableData[0][5].stats.mean
+            const std = this.variableData[0][5].stats.std
+            const min = this.variableData[0][5].stats.min
+            const q25 = this.variableData[0][5].stats.Q25
+            const median = this.variableData[0][5].stats.median
+            const q75 = this.variableData[0][5].stats.Q75
+            const max = this.variableData[0][5].stats.max
+            const range = this.variableData[0][5].stats.range
+            const iqr = this.variableData[0][5].stats.IQR
+            const skew = this.variableData[0][5].stats.skew
+            const kurtosis = this.variableData[0][5].stats.kurtosis
+            const sum = this.variableData[0][5].stats.sum
+
+            return [mean, std, min, q25, median, q75, max, range, iqr, skew, kurtosis, sum]
+        } else if(this.dtype === "categorical") {
+            const mode = this.variableData[0][5].stats.mode
+            const entropy = this.variableData[0][5].stats.entropy
+
+            return [mode, entropy]
+        }
+
         }
 
     setOverviewTableValues() {
