@@ -160,8 +160,8 @@ const createVariableDiv = (variable) => {
             <h3 class="variable-name"></h3>
             <h4 class="variable-type"></h4>
             <div class="wrapper-data-sel">
-            <button class="overview-btn overview-${variable}"><span><div class="dot"></div>Overview</span></button>
-            <button class="stats-btn stats-${variable}"><span><div class="dot"></div>Stats</span></button>
+            <button class="overview-btn overview-${variable}">Overview</button>
+            <button class="stats-btn stats-${variable}">Stats</button>
         </div>
         </div>
         <div class="variable-sub-container var-sum-2">
@@ -231,8 +231,8 @@ const createCategoricalVariableDiv = (variable) => {
             <h3 class="variable-name"></h3>
             <h4 class="variable-type"></h4>
             <div class="wrapper-data-sel">
-            <button class="overview-btn overview-${variable}"><span><div class="dot"></div>Overview</span></button>
-            <button class="stats-btn stats-${variable}"><span><div class="dot"></div>Stats</span></button>
+            <button class="overview-btn overview-${variable}">Overview</button>
+            <button class="stats-btn stats-${variable}">Stats</button>
         </div>
         </div>
         <div class="variable-sub-container var-sum-2">
@@ -286,6 +286,17 @@ const createCategoricalVariableDiv = (variable) => {
     mainWindow.append(div);
 }
 
+const toggleOn = (elem) => {
+    elem.style.backgroundColor = "#212121";
+    elem.style.border = "none";
+    elem.style.color = "white";
+};
+
+const toggleOff = (elem) => {
+    elem.style.backgroundColor = "#fff";
+    elem.style.border = "2px solid lightgrey";
+    elem.style.color = "#808080";
+};
 
 class VariableView {
     constructor(root, variable, variableObj, dtype) {
@@ -299,9 +310,19 @@ class VariableView {
             varType: root.querySelector(".variable-type"),
             tableValues: root.querySelectorAll(".td-value"),
             chartContainer: root.querySelector(".var-sum-4"),
+            overviewBtn: root.querySelector(`.overview-${this.variable}`),
+            statsBtn: root.querySelector(`.stats-${this.variable}`)
         }
 
+        this.elem.overviewBtn.addEventListener("click", event=> {
+            toggleOn(this.elem.overviewBtn);
+            toggleOff(this.elem.statsBtn);
+        });
 
+        this.elem.statsBtn.addEventListener("click", event=> {
+            toggleOn(this.elem.statsBtn);
+            toggleOff(this.elem.overviewBtn);
+        });
     };
 
     setVarName() {
@@ -385,9 +406,6 @@ class CategoricalVariableView extends VariableView {
 
 }
 
-var varBtns = [];
-var varEventListeners = [];
-
 varViews = []
 const renderMultiple = () => {
 
@@ -409,16 +427,7 @@ const renderMultiple = () => {
             vv.createVariableView(variables);
             varViews.push({_var: variable, instance: vv});
     }}
-    varBtns = Array.from(document.querySelectorAll(".overview-btn"));
-    varBtns.forEach((btn) => {
-        const btnClass = btn.className.split(" ")[1];
-        const individualBtn = document.querySelector(`.${btnClass}`);
-        individualBtn.addEventListener("click", event=> {
-            console.log(`clicked ${event.target.className}`)
-            event.target.className.style.backgroundColor = "pink";
-            ;
-        })
-    });
+
 
 }
 
