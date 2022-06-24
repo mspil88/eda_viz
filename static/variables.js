@@ -168,27 +168,27 @@ const createVariableDiv = (variable) => {
             <table class="variable-table v1-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Distinct</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Distinct (%)</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Missing</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Missing (%)</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Zeros</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Zeros (%)</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
 
             </table>
@@ -197,19 +197,19 @@ const createVariableDiv = (variable) => {
             <table class="variable-table v2-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Mean</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Min</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Max</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">SD</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
 
 
@@ -224,61 +224,154 @@ const createVariableDiv = (variable) => {
     mainWindow.append(div);
 }
 
+const overviewTable = (variable) => {
+    return [`<table class="variable-table v1-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Distinct</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Distinct (%)</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing (%)</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros (%)</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+
+            </table>`,
+        `<table class="variable-table v2-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Mean</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Min</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Max</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">SD</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+
+
+            </table>`]
+}
+
 const statsTable = (variable) => {
     return [`<table class="variable-table v1-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Mean</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">STD</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Min</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Q25</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Median</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Q75</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
 
             </table>`,
             `<table class="variable-table v2-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Max</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Range</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">IQR</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Skew</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Kurtosis</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var  val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Sum</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
 
             </table>`]
+}
+
+const overviewTableCat = (variable) => {
+    return [`<table class="variable-table v1-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Distinct</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Distinct (%)</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Missing (%)</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Zeros (%)</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+
+            </table>`,
+        `<table class="variable-table v2-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Mode</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Entropy</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
+                </tr>
+
+            </table>`
+    ]
+
 }
 
 const createCategoricalVariableDiv = (variable) => {
@@ -296,27 +389,27 @@ const createCategoricalVariableDiv = (variable) => {
             <table class="variable-table v1-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Distinct</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Distinct (%)</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Missing</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Missing (%)</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Zeros</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Zeros (%)</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
 
             </table>
@@ -325,11 +418,11 @@ const createCategoricalVariableDiv = (variable) => {
             <table class="variable-table v2-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Mode</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
                 <tr>
                     <td class="td-label td-label-var">Entropy</td>
-                    <td class="td-value td-value-var">-</td>
+                    <td class="td-value td-value-var val-${variable}">-</td>
                 </tr>
 
             </table>
@@ -378,6 +471,19 @@ class VariableView {
         this.elem.overviewBtn.addEventListener("click", event=> {
             toggleOn(this.elem.overviewBtn);
             toggleOff(this.elem.statsBtn);
+            this.elem.tableV1.remove();
+            this.elem.tableV2.remove();
+
+            if(this.dtype === "numeric") {
+                var [tbl1, tbl2] = overviewTable(this.variable);
+            } else if(this.dtype === "categorical") {
+                var [tbl1, tbl2] = overviewTableCat(this.variable);
+            }
+
+            this.elem.tableContainer1.innerHTML=tbl1;
+            this.elem.tableContainer2.innerHTML=tbl2;
+            this.setTableValues("overview");
+
         });
 
         this.elem.statsBtn.addEventListener("click", event=> {
@@ -388,6 +494,7 @@ class VariableView {
             const [tbl1, tbl2] = statsTable(this.variable);
             this.elem.tableContainer1.innerHTML=tbl1;
             this.elem.tableContainer2.innerHTML=tbl2;
+            this.setTableValues("stats");
         });
     };
 
@@ -432,12 +539,12 @@ class VariableView {
         const mean = this.variableData[0][5].stats.mean
         const std = this.variableData[0][5].stats.std
         const min = this.variableData[0][5].stats.min
-        const q25 = this.variableData[0][5].stats.q25
+        const q25 = this.variableData[0][5].stats.Q25
         const median = this.variableData[0][5].stats.median
-        const q75 = this.variableData[0][5].stats.q75
+        const q75 = this.variableData[0][5].stats.Q75
         const max = this.variableData[0][5].stats.max
         const range = this.variableData[0][5].stats.range
-        const iqr = this.variableData[0][5].stats.iqr
+        const iqr = this.variableData[0][5].stats.IQR
         const skew = this.variableData[0][5].stats.skew
         const kurtosis = this.variableData[0][5].stats.kurtosis
         const sum = this.variableData[0][5].stats.sum
@@ -458,6 +565,21 @@ class VariableView {
            i.innerHTML = j;
         }
     return this;
+    }
+
+    setTableValues(tableType="stats") {
+        const _zip = (x, y) => Array(Math.max(x.length, y.length)).fill().map((_, i) => [x[i], y[i]]);
+
+        if(tableType === "stats") {
+            var valueArray = this.unpackStatsValues(this.variableData);
+        } else if((tableType === "overview")) {
+            var [valueArray, ] = this.unpackKeyValues(this.variableData);
+        }
+        const newTableValues = document.querySelectorAll(`.val-${this.variable}`);
+
+        for(let[i, j] of _zip(newTableValues, valueArray)) {
+            i.innerHTML = j;
+        }
     }
 
     createVariableView(variableObj) {
