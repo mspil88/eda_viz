@@ -165,7 +165,7 @@ const createVariableDiv = (variable) => {
         </div>
         </div>
         <div class="variable-sub-container var-sum-2">
-            <table class="variable-table">
+            <table class="variable-table v1-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Distinct</td>
                     <td class="td-value td-value-var">-</td>
@@ -194,7 +194,7 @@ const createVariableDiv = (variable) => {
             </table>
         </div>
         <div class="variable-sub-container var-sum-3">
-            <table class="variable-table">
+            <table class="variable-table v2-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Mean</td>
                     <td class="td-value td-value-var">-</td>
@@ -224,6 +224,63 @@ const createVariableDiv = (variable) => {
     mainWindow.append(div);
 }
 
+const statsTable = (variable) => {
+    return [`<table class="variable-table v1-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Mean</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">STD</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Min</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Q25</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Median</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Q75</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+            </table>`,
+            `<table class="variable-table v2-${variable}">
+                <tr>
+                    <td class="td-label td-label-var">Max</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Range</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">IQR</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Skew</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Kurtosis</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+                <tr>
+                    <td class="td-label td-label-var">Sum</td>
+                    <td class="td-value td-value-var">-</td>
+                </tr>
+
+            </table>`]
+}
+
 const createCategoricalVariableDiv = (variable) => {
     div = document.createElement("div");
     div.className = `variable-container vc-${variable}`
@@ -236,7 +293,7 @@ const createCategoricalVariableDiv = (variable) => {
         </div>
         </div>
         <div class="variable-sub-container var-sum-2">
-            <table class="variable-table">
+            <table class="variable-table v1-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Distinct</td>
                     <td class="td-value td-value-var">-</td>
@@ -265,7 +322,7 @@ const createCategoricalVariableDiv = (variable) => {
             </table>
         </div>
         <div class="variable-sub-container var-sum-3">
-            <table class="variable-table">
+            <table class="variable-table v2-${variable}">
                 <tr>
                     <td class="td-label td-label-var">Mode</td>
                     <td class="td-value td-value-var">-</td>
@@ -310,8 +367,12 @@ class VariableView {
             varType: root.querySelector(".variable-type"),
             tableValues: root.querySelectorAll(".td-value"),
             chartContainer: root.querySelector(".var-sum-4"),
+            tableContainer1: root.querySelector(".var-sum-2"),
+            tableContainer2: root.querySelector(".var-sum-3"),
             overviewBtn: root.querySelector(`.overview-${this.variable}`),
-            statsBtn: root.querySelector(`.stats-${this.variable}`)
+            statsBtn: root.querySelector(`.stats-${this.variable}`),
+            tableV1: root.querySelector(`.v1-${this.variable}`),
+            tableV2: root.querySelector(`.v2-${this.variable}`)
         }
 
         this.elem.overviewBtn.addEventListener("click", event=> {
@@ -322,6 +383,11 @@ class VariableView {
         this.elem.statsBtn.addEventListener("click", event=> {
             toggleOn(this.elem.statsBtn);
             toggleOff(this.elem.overviewBtn);
+            this.elem.tableV1.remove();
+            this.elem.tableV2.remove();
+            const [tbl1, tbl2] = statsTable(this.variable);
+            this.elem.tableContainer1.innerHTML=tbl1;
+            this.elem.tableContainer2.innerHTML=tbl2;
         });
     };
 
@@ -360,6 +426,23 @@ class VariableView {
 
         return [[distinct, distinctProportion, missing, missingProportion, zero, zeroProportion,
                 mean, min, max, std], [x, y]]
+        }
+
+    unpackStatsValues() {
+        const mean = this.variableData[0][5].stats.mean
+        const std = this.variableData[0][5].stats.std
+        const min = this.variableData[0][5].stats.min
+        const q25 = this.variableData[0][5].stats.q25
+        const median = this.variableData[0][5].stats.median
+        const q75 = this.variableData[0][5].stats.q75
+        const max = this.variableData[0][5].stats.max
+        const range = this.variableData[0][5].stats.range
+        const iqr = this.variableData[0][5].stats.iqr
+        const skew = this.variableData[0][5].stats.skew
+        const kurtosis = this.variableData[0][5].stats.kurtosis
+        const sum = this.variableData[0][5].stats.sum
+
+        return [mean, std, min, q25, median, q75, max, range, iqr, skew, kurtosis, sum]
         }
 
     setOverviewTableValues() {
