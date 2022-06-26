@@ -136,8 +136,8 @@ color:#fff;
 
 
 .summary-container, .missing-container, .sample-container {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 2px;
+    border-bottom: 1px solid black;
+    
     margin: 0 20px 20px 20px;
     height: 300px;
     max-width: 1000px;
