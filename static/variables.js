@@ -474,6 +474,7 @@ class VariableView {
             chartContainer: root.querySelector(".var-sum-4"),
             tableContainer1: root.querySelector(".var-sum-2"),
             tableContainer2: root.querySelector(".var-sum-3"),
+            chartContainerLocal: root.querySelector(`.var-sum-${this.variable}`),
             overviewBtn: root.querySelector(`.overview-${this.variable}`),
             statsBtn: root.querySelector(`.stats-${this.variable}`),
             tableV1: root.querySelector(`.v1-${this.variable}`),
@@ -481,39 +482,38 @@ class VariableView {
         }
 
         this.elem.overviewBtn.addEventListener("click", event=> {
-            toggleOn(this.elem.overviewBtn);
-            toggleOff(this.elem.statsBtn);
-            this.elem.tableV1.remove();
-            this.elem.tableV2.remove();
-
-            if(this.dtype === "numeric") {
-                var [tbl1, tbl2] = overviewTable(this.variable);
-            } else if(this.dtype === "categorical") {
-                var [tbl1, tbl2] = overviewTableCat(this.variable);
-            }
-
-            this.elem.tableContainer1.innerHTML=tbl1;
-            this.elem.tableContainer2.innerHTML=tbl2;
-            this.setTableValues("overview");
-
+            this.toggleBtnController(this.elem.overviewBtn, this.elem.statsBtn);
+            this.removeElem(this.elem.tableV1, this.elem.tableV2);
+            this.setTableController(overviewTable, overviewTableCat, "overview");
         });
 
         this.elem.statsBtn.addEventListener("click", event=> {
-            toggleOn(this.elem.statsBtn);
-            toggleOff(this.elem.overviewBtn);
-            this.elem.tableV1.remove();
-            this.elem.tableV2.remove();
-
-            if(this.dtype === "numeric") {
-                var [tbl1, tbl2] = statsTable(this.variable);
-            } else if(this.dtype === "categorical") {
-                var [tbl1, tbl2] = statsTableCat(this.variable);
-            }
-            this.elem.tableContainer1.innerHTML=tbl1;
-            this.elem.tableContainer2.innerHTML=tbl2;
-            this.setTableValues("stats");
+            this.toggleBtnController(this.elem.statsBtn, this.elem.overviewBtn);
+            this.removeElem(this.elem.tableV1, this.elem.tableV2);
+            this.setTableController(statsTable, statsTableCat, "stats");
         });
     };
+
+    toggleBtnController(elem1, elem2) {
+        toggleOn(elem1);
+        toggleOff(elem2)
+    }
+
+    removeElem(elem1, elem2) {
+        elem1.remove();
+        elem2.remove();
+    }
+
+    setTableController(tableFunc1, tableFunc2, setTableType) {
+        if(this.dtype === "numeric") {
+                var [tbl1, tbl2] = tableFunc1(this.variable);
+            } else if(this.dtype === "categorical") {
+                var [tbl1, tbl2] = tableFunc2(this.variable);
+            }
+        this.elem.tableContainer1.innerHTML=tbl1;
+        this.elem.tableContainer2.innerHTML=tbl2;
+        this.setTableValues(setTableType);
+    }
 
     setVarName() {
         this.elem.varName.innerHTML = this.variable;
@@ -584,8 +584,8 @@ class VariableView {
         const [x, y] = plotValues
         const plotDiv = document.querySelector(`.var-sum-${this.variable}`);
 
-//        Plotly.purge(plotDiv);
-        createDistributionPlot(plotDiv, x, y, barPlotLayout, plotConfig);
+        //Plotly.purge(plotDiv);
+        createDistributionPlot(this.elem.chartContainerLocal, x, y, barPlotLayout, plotConfig);
 
         for(let [i, j] of _zip(this.elem.tableValues, valueArray)) {
            i.innerHTML = j;
