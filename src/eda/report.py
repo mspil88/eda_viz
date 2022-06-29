@@ -10,7 +10,7 @@ from plots import histogram_values, frequency_values
 from shape import get_shape
 from duplicates import get_duplicates
 from data_types import get_data_types, count_data_types
-
+from correlation import Pearson, Spearman, Kendall, Cramer, correlations
 
 class VariableReport(ABC):
 
@@ -154,6 +154,7 @@ class OverviewReport(Overview):
         self.variable_types = None
         self.head = None
         self.tail = None
+        self.correlations = None
 
     def get_counts(self, df: pd.DataFrame):
         rows, columns = get_shape(df)
@@ -183,8 +184,12 @@ class OverviewReport(Overview):
         self.tail = {"tail": tail.data}
         return self
 
+    def retrieve_correlations(self, df: pd.DataFrame):
+        self.correlations = correlations(df)
+        return self
+
     def generate_summary(self, df:pd.DataFrame):
-        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_examples(df).retrieve_data_types(df)
+        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_examples(df).retrieve_data_types(df).retrieve_correlations(df)
         return {"overview":
             [self.num_obs,
                  self.num_variables,
@@ -194,5 +199,6 @@ class OverviewReport(Overview):
                  self.head,
                  self.tail,
                  self.variable_type_mapping,
-                 self.variable_types]
+                 self.variable_types,
+                 self.correlations]
                 }
