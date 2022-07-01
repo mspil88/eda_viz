@@ -7,6 +7,13 @@
     <div class="relationships-container">
         <div class="rel-sub-container correlations-container">
             <h3 class="info-sub-title">Correlations</h3>
+            <div class="corr-type-container">
+                <button class="corr-btn pearson">Pearson</button>
+                <button class="corr-btn spearman">Spearman</button>
+                <button class="corr-btn kendall">Kendall</button>
+                <button class="corr-btn cramer">Cramer</button>
+
+            </div>
         </div>
         <div class="rel-sub-container numeric-relationships-container">
             <h3 class="info-sub-title">Scatter Plots</h3>
@@ -16,5 +23,6 @@
         </div>
 
     </div>
-
+    {{JSGlue.include()}}
+    <script src="{{url_for('static', filename='relationships.js')}}"></script>
 {% endblock %}
