@@ -12,8 +12,8 @@
                 <button class="corr-btn spearman">Spearman</button>
                 <button class="corr-btn kendall">Kendall</button>
                 <button class="corr-btn cramer">Cramer</button>
-
             </div>
+            <div class="correlation-plot-container"></div>
         </div>
         <div class="rel-sub-container numeric-relationships-container">
             <h3 class="info-sub-title">Scatter Plots</h3>
@@ -23,6 +23,20 @@
         </div>
 
     </div>
+<script>
+        const loadData = (data) => {
+            try {
+                const variables =JSON.parse(data);
+                return variables
+            } catch(err) {
+                console.log(`Data load failed with ${err}`);
+                return null
+            }
+        }
+
+        const obj = loadData('{{obj | tojson | safe}}');
+
+    </script>
     {{JSGlue.include()}}
     <script src="{{url_for('static', filename='relationships.js')}}"></script>
 {% endblock %}

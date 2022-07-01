@@ -1,4 +1,5 @@
 const corrBtns = document.querySelectorAll(".corr-btn");
+const correlationPlot = document.querySelector(".correlation-plot-container");
 
 const toggleOn = (elem) => {
     elem.style.backgroundColor = "#212121";
@@ -41,3 +42,30 @@ function controlCorrelationView() {
 corrBtns.forEach((btn) => {
     btn.addEventListener("click", controlCorrelationView);
 })
+
+const createCorrelationData = (obj) => {
+    const x = Object.keys(obj);
+    const y = x;
+    let z = []
+
+    for(let [k, v] of Object.entries(obj)) {
+        z.push(Object.values(v))
+    }
+    return [x, y, z]
+}
+
+const [x_ax, y_ax, z_ax] = createCorrelationData(obj);
+
+const correlationTrace =
+    [{z: z_ax,
+    x: x_ax,
+    y: y_ax,
+    colorscale: 'Greys',
+    type: 'heatmap',
+    hoverongaps: false}]
+
+
+const plotConfig = {responsive: true, displayModeBar: false}
+
+
+Plotly.newPlot(correlationPlot, correlationTrace, config=plotConfig);
