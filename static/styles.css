@@ -126,7 +126,7 @@ color:#fff;
     font-family: arial;
 }
 
-.info-container {
+.info-container, .relationships-container {
 
     margin-left: 20%;
     margin-right: 250px;
@@ -135,7 +135,7 @@ color:#fff;
 }
 
 
-.summary-container, .missing-container, .sample-container {
+.summary-container, .missing-container, .sample-container, .rel-sub-container  {
     border-bottom: 1px solid black;
     
     margin: 0 20px 20px 20px;
@@ -143,6 +143,10 @@ color:#fff;
     max-width: 1000px;
     min-width: 400px;
 
+}
+
+.rel-sub-container {
+    height: 500px;
 }
 
 .summary-container {
