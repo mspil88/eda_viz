@@ -16,4 +16,6 @@ def build_report(df: pd.DataFrame):
         elif value['mapped_dtype'] == "categorical":
             summary_container.append(CategoricalVariableReport(key).generate_summary(df[key]))
 
+    print(f"overview dtypes {overview.variable_type_mapping['data_types']}")
+
     return summary_container
