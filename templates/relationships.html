@@ -17,6 +17,16 @@
         </div>
         <div class="rel-sub-container numeric-relationships-container">
             <h3 class="info-sub-title">Scatter Plots</h3>
+            <div class="scatter-btns scatter-row1">
+                {% for key in _keys %}
+                    <button class="scatter-btn scatter-{{key}}-r1">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="scatter-btns scatter-row2">
+                {% for key in _keys %}
+                    <button class="scatter-btn scatter-{{key}}-r2">{{key}}</button>
+                {% endfor %}
+            </div>
         </div>
         <div class="rel-sub-container numeric-cat-box-container">
             <h3 class="info-sub-title">Box Plots</h3>
@@ -35,6 +45,7 @@
         }
 
         const obj = loadData('{{obj | tojson | safe}}');
+        const sObj = loadData('{{scatter | tojson | safe}}');
 
     </script>
     {{JSGlue.include()}}

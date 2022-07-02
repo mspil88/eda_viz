@@ -149,6 +149,10 @@ color:#fff;
     height: 500px;
 }
 
+.correlations-container {
+    height: 550px;
+}
+
 .summary-container {
     display: flex;
     flex-direction: row;
@@ -431,7 +435,7 @@ input[type="radio"]{
   transition: all 0.3s ease;
 }
 
-.corr-btn {
+.corr-btn, .scatter-btn {
   border-radius: 5px;
   justify-content: space-evenly;
   align-items: center;
