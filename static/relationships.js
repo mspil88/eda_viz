@@ -88,21 +88,65 @@ const renderCorrelationPlot = (obj, corrType) => {
 
 const scatterRow1 = Array.from(document.querySelector(".scatter-row1").children);
 const scatterRow2 = Array.from(document.querySelector(".scatter-row2").children);
+const scatterPlotContainer = document.querySelector(".scatter-plot-container");
+let scatterVars = ['','']
 
+const checkVariables = () => {
+    if((scatterVars[0] === '') && (scatterVars[1] !== '')) {
+        scatterVars[0] = scatterVars[1];
+    } else if((scatterVars[0] !== '') && (scatterVars[1] === '')) {
+        scatterVars[1] = scatterVars[0];
+    }
+}
+
+const scatterLayout = (x, y) => {
+    return {
+        xaxis: {
+            title: {text: x}
+        },
+        yaxis: {
+            title: {text: y}
+        },
+    }
+}
 
 function controlScatterView1() {
     const btnElem = this.className.split(" ")[1];
+    const variable = btnElem.split("-")[1];
+    scatterVars[0] = variable;
     console.log(`clicked ${btnElem}`)
     toggleOn(this);
     toggleOffScatter(btnElem, scatterRow1);
+    checkVariables();
+    console.log(scatterVars);
+    const tr = scatterPlotTrace(sObj.scatterplot_data[scatterVars[0]], sObj.scatterplot_data[scatterVars[1]]);
+    layout = scatterLayout(scatterVars[0], scatterVars[1]);
+    const plotConfig = {responsive: true, displayModeBar: false}
+    Plotly.newPlot(scatterPlotContainer, tr, layout, plotConfig);
 
 }
 
 function controlScatterView2() {
     const btnElem = this.className.split(" ")[1];
+    const variable = btnElem.split("-")[1];
+    scatterVars[1] = variable;
     console.log(`clicked ${btnElem}`)
     toggleOn(this);
     toggleOffScatter(btnElem, scatterRow2);
+    checkVariables();
+    console.log(scatterVars);
+    const tr = scatterPlotTrace(sObj.scatterplot_data[scatterVars[0]], sObj.scatterplot_data[scatterVars[1]]);
+    layout = scatterLayout(scatterVars[0], scatterVars[1]);
+    const plotConfig = {responsive: true, displayModeBar: false}
+    Plotly.newPlot(scatterPlotContainer, tr, layout, plotConfig);
+}
+
+function controlScatterView() {
+    const btnElem = this.className.split(" ")[1];
+    console.log(`clicked ${btnElem}`)
+    toggleOn(this);
+    toggleOffScatter(btnElem, scatterRow2);
+
 
 }
 
@@ -122,3 +166,18 @@ scatterRow2.forEach((btn) => {
     btn.addEventListener("click", controlScatterView2);
 });
 
+const scatterPlotTrace = (x, y) => {
+    return [{
+        x: x,
+        y: y,
+        mode: 'markers',
+        marker: {
+            color: "rgb(128, 128, 128)",
+            line: {
+                color: "rgb(33, 33, 33)",
+                width: 0.3
+                },
+        },
+        type: 'scatter'
+    }]
+}

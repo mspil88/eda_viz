@@ -447,6 +447,10 @@ input[type="radio"]{
   transition: all 0.3s ease;
 }
 
+.scatter-plot-container {
+    max-height: 380px;
+}
+
 .overview-btn, .pearson {
     background: #212121;
 }
