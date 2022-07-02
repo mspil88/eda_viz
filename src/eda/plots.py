@@ -29,12 +29,12 @@ def dtype_for_plot(summary: dict, dtype: str):
     return [i for i in summary if summary[i]["mapped_dtype"] == dtype]
 
 
-def scatter_plot_data(df: pd.DataFrame, summary: dict) -> dict:
+def scatterplot_data(df: pd.DataFrame, summary: dict) -> dict:
     numeric_vars = dtype_for_plot(summary, "numeric")
 
     df = df[numeric_vars].dropna()
 
-    return {numeric_var: df[numeric_var].to_list() for numeric_var in numeric_vars}
+    return {"scatterplot_data": {numeric_var: df[numeric_var].to_list() for numeric_var in numeric_vars}}
 
 
 def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:

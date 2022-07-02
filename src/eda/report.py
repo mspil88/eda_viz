@@ -6,7 +6,7 @@ from missing import calculate_missing_values, df_level_missing_values
 from distinct import count_distinct, count_zero_values
 from examples import get_example
 from variable_stats import numeric_statistics, categorical_statistics
-from plots import histogram_values, frequency_values
+from plots import histogram_values, frequency_values, scatterplot_data
 from shape import get_shape
 from duplicates import get_duplicates
 from data_types import get_data_types, count_data_types
@@ -155,6 +155,7 @@ class OverviewReport(Overview):
         self.head = None
         self.tail = None
         self.correlations = None
+        self.scatterplot_data = None
 
     def get_counts(self, df: pd.DataFrame):
         rows, columns = get_shape(df)
@@ -188,8 +189,13 @@ class OverviewReport(Overview):
         self.correlations = correlations(df)
         return self
 
+    def retrieve_scatterplot_data(self, df: pd.DataFrame):
+        self.scatterplot_data = scatterplot_data(df, self.variable_type_mapping['data_types'])
+        # print(self.variable_type_mapping['data_types'])
+        return self
+
     def generate_summary(self, df:pd.DataFrame):
-        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_examples(df).retrieve_data_types(df).retrieve_correlations(df)
+        self.get_counts(df).get_missing_values(df).count_duplicates(df).retrieve_examples(df).retrieve_data_types(df).retrieve_correlations(df).retrieve_scatterplot_data(df)
         return {"overview":
             [self.num_obs,
                  self.num_variables,
@@ -200,5 +206,6 @@ class OverviewReport(Overview):
                  self.tail,
                  self.variable_type_mapping,
                  self.variable_types,
-                 self.correlations]
+                 self.correlations,
+                 self.scatterplot_data]
                 }
