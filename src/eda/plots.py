@@ -44,18 +44,13 @@ def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
     IGNORE_IF_GREATER_THAN = 10
     boxplot = {}
 
-    for num, cat in list(product(numeric_vars, categorical_vars)):
-        cats = list(df[cat].unique())
+    for num, cat in product(numeric_vars, categorical_vars):
+        cats = list(df[cat].dropna().unique())
         if len(cats) < IGNORE_IF_GREATER_THAN:
             container = [cats]
             for k in cats:
-                data = df.loc[df[cat] == k, num]
+                data = df.loc[df[cat] == k, num].dropna()
                 container.append(list(data))
             boxplot[num] = container
 
-    return boxplot
-
-
-
-
-
+    return {"boxplot_data": boxplot}
