@@ -1,4 +1,4 @@
-from itertools import combinations
+from itertools import product
 import pandas as pd
 import numpy as np
 
@@ -38,9 +38,22 @@ def scatterplot_data(df: pd.DataFrame, summary: dict) -> dict:
 
 
 def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
-    # numeric_vars = dtype_for_plot(summary, "numeric")
-    # categorical_vars = dtype_for_plot(summary, "categorical")
-    pass
+    numeric_vars = dtype_for_plot(summary, "numeric")
+    categorical_vars = dtype_for_plot(summary, "categorical")
+
+    IGNORE_IF_GREATER_THAN = 10
+    boxplot = {}
+
+    for num, cat in list(product(numeric_vars, categorical_vars)):
+        cats = list(df[cat].unique())
+        if len(cats) < IGNORE_IF_GREATER_THAN:
+            container = [cats]
+            for k in cats:
+                data = df.loc[df[cat] == k, num]
+                container.append(list(data))
+            boxplot[num] = container
+
+    return boxplot
 
 
 
