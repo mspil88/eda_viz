@@ -1,4 +1,5 @@
 from itertools import product
+from collections import defaultdict
 import pandas as pd
 import numpy as np
 
@@ -42,15 +43,15 @@ def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
     categorical_vars = dtype_for_plot(summary, "categorical")
 
     IGNORE_IF_GREATER_THAN = 10
-    boxplot = {}
+    boxplot = defaultdict(list)
 
     for num, cat in product(numeric_vars, categorical_vars):
         cats = list(df[cat].dropna().unique())
         if len(cats) < IGNORE_IF_GREATER_THAN:
-            container = [cats]
+            container = [cat, cats]
             for k in cats:
                 data = df.loc[df[cat] == k, num].dropna()
                 container.append(list(data))
-            boxplot[num] = container
+            boxplot[num].append(container)
 
-    return {"boxplot_data": boxplot}
+    return {"boxplot_data": dict(boxplot)}
