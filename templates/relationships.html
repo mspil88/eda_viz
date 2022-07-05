@@ -31,6 +31,17 @@
         </div>
         <div class="rel-sub-container numeric-cat-box-container">
             <h3 class="info-sub-title">Box Plots</h3>
+            <div class="scatter-btns box-row1">
+                {% for key in box_r1 %}
+                    <button class="scatter-btn box-{{key}}-r1">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="scatter-btns box-row2">
+                {% for key in box_r2 %}
+                    <button class="scatter-btn box-{{key}}-r2">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="box-plot-container"></div>
         </div>
 
     </div>
@@ -47,6 +58,8 @@
 
         const obj = loadData('{{obj | tojson | safe}}');
         const sObj = loadData('{{scatter | tojson | safe}}');
+        const bObj = loadData('{{box | tojson | safe}}');
+
 
     </script>
     {{JSGlue.include()}}
