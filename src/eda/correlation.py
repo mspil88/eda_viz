@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from itertools import combinations
 import pandas as pd
 import numpy as np
@@ -6,18 +6,18 @@ import scipy.stats as stats
 
 
 class Correlation(ABC):
-    @staticmethod
-    def calculate(df, summary):
+    @abstractmethod
+    def calculate(df):
         pass
 
 
 class Spearman(Correlation):
-    def calculate(self, df, summary):
+    def calculate(self, df):
         return df.corr(method="spearman")
 
 
 class Pearson(Correlation):
-    def calculate(self, df, summary):
+    def calculate(self, df):
         return df.corr(method="pearson")
 
 
@@ -31,10 +31,12 @@ class Cramer(Correlation):
         n = np.sum(cross_tab.sum())
         phi2 = chi2/n
         r, k = cross_tab.shape
-        phi2corr = np.max(0, phi2 - ((k-1)*(r-1))/(n-1))
-        rcorr = r - ((r-1)**2)/(n-1)
-        kcorr = k - ((k-1)**2)/(n-1)
-        return 1 if rcorr == 0 else np.sqrt(phi2corr / np.min((kcorr-1), (rcorr-1)))
+
+        with np.errstate(divide="ignore", invalid="ignore"):
+            phi2corr = max(0, phi2 - ((k-1)*(r-1))/(n-1))
+            rcorr = r - ((r-1)**2)/(n-1)
+            kcorr = k - ((k-1)**2)/(n-1)
+            return 1 if rcorr == 0 else np.sqrt(phi2corr / min((kcorr-1), (rcorr-1)))
 
     def initialise_matrix(self, vars):
         r_c = len(vars)
@@ -43,10 +45,12 @@ class Cramer(Correlation):
         return pd.DataFrame(m, index=vars, columns=vars)
 
     def calculate(self, df, summary):
-        categorical_variables = [key for key, value in summary["datatypes"].items() if value == "categorical"]
-        cramers_matrix = self.initialise_matrix(categorical_variables)
+        #categorical_variables = [key for key, value in summary["datatypes"].items() if value == "categorical"]
+        #cramers_matrix = self.initialise_matrix(categorical_variables)
+        categorical_variables = summary
+        cramers_matrix = self.initialise_matrix(summary)
 
-        if len(categorical_variables):
+        if len(categorical_variables) == 0:
             return None
         for v1, v2 in list(combinations(categorical_variables, 2)):
             temp_cross_tab = pd.crosstab(df[v1], df[v2])
@@ -57,7 +61,13 @@ class Cramer(Correlation):
 
 
 class Kendall(Correlation):
-    def calculate(df, summary):
+    def calculate(self, df):
         return df.corr(method="kendall")
 
 
+def correlations(df: pd.DataFrame):
+    pearson = Pearson().calculate(df).to_dict()
+    spearman = Spearman().calculate(df).to_dict()
+    kendall = Kendall().calculate(df).to_dict()
+
+    return {"correlation": {"pearson": pearson, "spearman": spearman, "kendall": kendall}}

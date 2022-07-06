@@ -1,3 +1,5 @@
+from itertools import product
+from collections import defaultdict
 import pandas as pd
 import numpy as np
 
@@ -24,3 +26,32 @@ def frequency_values(column: pd.Series) -> dict:
     return {"distribution": {"x": list(frequency_dict.keys()), "y": list(frequency_dict.values())}}
 
 
+def dtype_for_plot(summary: dict, dtype: str):
+    return [i for i in summary if summary[i]["mapped_dtype"] == dtype]
+
+
+def scatterplot_data(df: pd.DataFrame, summary: dict) -> dict:
+    numeric_vars = dtype_for_plot(summary, "numeric")
+
+    df = df[numeric_vars].dropna()
+
+    return {"scatterplot_data": {numeric_var: df[numeric_var].to_list() for numeric_var in numeric_vars}}
+
+
+def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
+    numeric_vars = dtype_for_plot(summary, "numeric")
+    categorical_vars = dtype_for_plot(summary, "categorical")
+
+    IGNORE_IF_GREATER_THAN = 10
+    boxplot = defaultdict(list)
+
+    for num, cat in product(numeric_vars, categorical_vars):
+        cats = list(df[cat].dropna().unique())
+        if len(cats) < IGNORE_IF_GREATER_THAN:
+            container = [cat, cats]
+            for k in cats:
+                data = df.loc[df[cat] == k, num].dropna()
+                container.append(list(data))
+            boxplot[num].append(container)
+
+    return {"boxplot_data": dict(boxplot)}

@@ -1,0 +1,67 @@
+{% extends "base_template.html" %}
+{% block main %}
+    <div class="page-title">
+        <h1>Relationships</h1>
+    </div>
+
+    <div class="relationships-container">
+        <div class="rel-sub-container correlations-container">
+            <h3 class="info-sub-title">Correlations</h3>
+            <div class="corr-type-container">
+                <button class="corr-btn pearson">Pearson</button>
+                <button class="corr-btn spearman">Spearman</button>
+                <button class="corr-btn kendall">Kendall</button>
+                <button class="corr-btn cramer">Cramer</button>
+            </div>
+            <div class="correlation-plot-container"></div>
+        </div>
+        <div class="rel-sub-container numeric-relationships-container">
+            <h3 class="info-sub-title">Scatter Plots</h3>
+            <div class="scatter-btns scatter-row1">
+                {% for key in _keys %}
+                    <button class="scatter-btn scatter-{{key}}-r1">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="scatter-btns scatter-row2">
+                {% for key in _keys %}
+                    <button class="scatter-btn scatter-{{key}}-r2">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="scatter-plot-container"></div>
+        </div>
+        <div class="rel-sub-container numeric-cat-box-container">
+            <h3 class="info-sub-title">Box Plots</h3>
+            <div class="scatter-btns box-row1">
+                {% for key in box_r1 %}
+                    <button class="scatter-btn box-{{key}}-r1">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="scatter-btns box-row2">
+                {% for key in box_r2 %}
+                    <button class="scatter-btn box-{{key}}-r2">{{key}}</button>
+                {% endfor %}
+            </div>
+            <div class="box-plot-container"></div>
+        </div>
+
+    </div>
+<script>
+        const loadData = (data) => {
+            try {
+                const variables =JSON.parse(data);
+                return variables
+            } catch(err) {
+                console.log(`Data load failed with ${err}`);
+                return null
+            }
+        }
+
+        const obj = loadData('{{obj | tojson | safe}}');
+        const sObj = loadData('{{scatter | tojson | safe}}');
+        const bObj = loadData('{{box | tojson | safe}}');
+
+
+    </script>
+    {{JSGlue.include()}}
+    <script src="{{url_for('static', filename='relationships.js')}}"></script>
+{% endblock %}
