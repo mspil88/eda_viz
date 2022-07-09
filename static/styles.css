@@ -243,7 +243,7 @@ tr:hover {
     padding-left: 10px;
 }
 
-.variable-view-controller {
+.variable-view-controller, .load-container {
     margin-left: 20%;
     margin-right: 20%;
     margin-top: 2%;
@@ -535,4 +535,57 @@ input[type="radio"]{
 
 .td-label-var, .td-value-var {
     font-size: 10px;
+}
+
+.load-title {
+    font-family: arial;
+}
+
+.load-container {
+    display: block;
+    max-width: 900px;
+}
+
+.upload-btn {
+  border-radius: 5px;
+  justify-content: space-evenly;
+  background: #212121;
+  display: inline;
+  align-items: center;
+  color: white;
+  font-family: arial;
+  height: 30px;
+  width: 90px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.load-title {
+    width: 50%;
+}
+
+.load-title-btn {
+    width: 80%;
+}
+
+.load-row {
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.load-row:last-child {
+    border-bottom: none;
+}
+
+.load-input {
+    width: 45%;
+}
+
+.load-btn {
+    max-width: 20%;
+}
+
+.row-item {
+    display: inline-block;
 }

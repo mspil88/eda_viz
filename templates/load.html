@@ -1,7 +1,23 @@
 {% extends "base_template.html" %}
 {% block main %}
+    <div class="load-container">
+        <h3 class="variable-title load-header">Load Data</h3>
+            <div class="load-row">
+                <span class="load-title row-item">Exclude Fields:</span>
+                 <input class="load-input load-exclusions row-item">
+            </div>
+            <div class="load-row">
+                      <span class="load-title row-item">Categorical Fields:</span>
+                         <input class="load-input load-categorical row-item">
+                </div>
+        <div class="load-row">
+            <span class="load-title load-title-btn row-item">Load Data:</span>
+            <button class="load-btn upload-btn row-item">Open</button>
+        </div>
 
+    </div>
 
-
+    {{JSGlue.include()}}
+    <script src="{{url_for('static', filename='load.js')}}"></script>
 
 {% endblock %}
