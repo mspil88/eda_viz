@@ -22,6 +22,11 @@ def index():
     return res
 
 
+@app.route("/load", methods=["GET", "POST"])
+def load():
+    if request.method == "GET":
+        return render_template("load.html")
+
 @app.route("/relationships")
 def relationships():
     o = {'pearson': {'PassengerId': {'PassengerId': 1.0,
