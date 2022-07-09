@@ -26,6 +26,11 @@ def index():
 def load():
     if request.method == "GET":
         return render_template("load.html")
+    else:
+        print("load posting")
+        data = request.get_json()
+        print(data)
+        return render_template("load.html")
 
 @app.route("/relationships")
 def relationships():
