@@ -18,21 +18,23 @@ const openFile = async ()=> {
         const fileData = await fileHandle.getFile();
         const text = await fileData.text();
         const fileType = fileData.type;
+        const delimiter = document.querySelector(".delimiter-sel").value;
         const dataExclusions = document.querySelector(".load-exclusions").value.replace(/\s+/g, '');
         const categoricalVariables = document.querySelector(".load-categorical").value.replace(/\s+/g, '');
         console.log(text);
-        const payload = dataToSend(text, fileType, dataExclusions, categoricalVariables)
+        const payload = dataToSend(text, fileType, delimiter, dataExclusions, categoricalVariables);
         sendData(payload);
     } catch(err) {
         console.log(err);
     }
 }
 
-const dataToSend = (file, fileType, exclusions, categoricalVars) => {
+const dataToSend = (file, fileType, delimiter, exclusions, categoricalVars) => {
     return {data: file,
             fileExtension: fileType,
-            dataExclusions: exclusions,
-            categoricals: categoricalVars
+            delim: delimiter,
+            dataExclusions: exclusions.split(","),
+            categoricals: categoricalVars.split(",")
     }
 }
 
