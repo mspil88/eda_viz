@@ -557,7 +557,14 @@ input[type="radio"]{
   height: 30px;
   width: 90px;
   margin-bottom: 10px;
+  max-width: 20%;
   transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #fff;
+    color: #808080;
+    border: 2px solid lightgrey;
 }
 
 .load-title {
@@ -582,9 +589,6 @@ input[type="radio"]{
     width: 45%;
 }
 
-.load-btn {
-    max-width: 20%;
-}
 
 .row-item {
     display: inline-block;
