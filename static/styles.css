@@ -593,3 +593,7 @@ input[type="radio"]{
 .row-item {
     display: inline-block;
 }
+
+.delimiter-sel-container {
+    display: inline-block;
+}
