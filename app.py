@@ -1,7 +1,9 @@
+import os
+from operator import itemgetter
 from flask import Flask, request, session, make_response, render_template
 from flask_jsglue import JSGlue
 import pandas as pd
-import os
+from src.eda.preprocess import PreprocessDataFrame
 
 
 app = Flask(__name__)
@@ -28,8 +30,17 @@ def load():
         return render_template("load.html")
     else:
         print("load posting")
-        data = request.get_json()
-        print(data)
+        response_json = request.get_json()
+        data, file_extension, delimiter, exclude_columns, cat_columns = itemgetter("data", "fileExtension",
+                                                                                   "delim", "dataExclusions",
+                                                                                   "categoricals")(response_json)
+        print(response_json.keys())
+        print(delimiter)
+        print(file_extension)
+        print(exclude_columns)
+        df = PreprocessDataFrame(data, file_extension, delimiter, exclude_columns).process_data()
+        print(df)
+        print(df.shape)
         return render_template("load.html")
 
 @app.route("/relationships")
