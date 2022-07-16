@@ -2,14 +2,16 @@ import os
 from operator import itemgetter
 from flask import Flask, request, session, make_response, render_template
 from flask_jsglue import JSGlue
+from flask_caching import Cache
 import pandas as pd
 from src.eda.preprocess import PreprocessDataFrame
 
 
 app = Flask(__name__)
-
+app.config["CACHE_TYPE"] = "SimpleCache"
 jsglue = JSGlue()
 jsglue.init_app(app)
+cache = Cache(app)
 
 @app.route("/")
 def index():
@@ -35,11 +37,12 @@ def load():
                                                                                    "delim", "dataExclusions",
                                                                                    "categoricals")(response_json)
         df = PreprocessDataFrame(data, file_extension, delimiter, exclude_columns).process_data()
-
+        cache.set("data", df)
         return render_template("load.html")
 
 @app.route("/relationships")
 def relationships():
+    print(cache.get("data"))
     o = {'pearson': {'PassengerId': {'PassengerId': 1.0,
    'Survived': -0.0050066607670665175,
    'Pclass': -0.03514399403038102,
