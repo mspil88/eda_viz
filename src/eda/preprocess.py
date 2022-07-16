@@ -60,8 +60,17 @@ class PreprocessDataFrame:
         return self
 
     def clean_string_columns(self):
-        raise NotImplementedError
+        df_c = self.df.copy()
+
+        for i in df_c:
+            if df_c[i].dtypes == "object":
+                try:
+                    df_c[i] = df_c[i].apply(lambda s: s.replace('"', '').replace("'", ''))
+                except AttributeError:
+                    continue
+        self.df = df_c
 
     def process_data(self):
-        self.parse_df().exclude_columns()
+
+        self.parse_df().exclude_columns().clean_string_columns()
         return self.df

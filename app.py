@@ -34,13 +34,8 @@ def load():
         data, file_extension, delimiter, exclude_columns, cat_columns = itemgetter("data", "fileExtension",
                                                                                    "delim", "dataExclusions",
                                                                                    "categoricals")(response_json)
-        print(response_json.keys())
-        print(delimiter)
-        print(file_extension)
-        print(exclude_columns)
         df = PreprocessDataFrame(data, file_extension, delimiter, exclude_columns).process_data()
-        print(df)
-        print(df.shape)
+
         return render_template("load.html")
 
 @app.route("/relationships")
