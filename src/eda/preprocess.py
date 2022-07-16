@@ -1,6 +1,7 @@
 from io import StringIO
 import pandas as pd
 
+
 class PreprocessDataFrame:
     def __init__(self, string_input:str, file_extension: str = "csv", delimiter: str = 'none', exclusions: list = []):
         self.string_input = string_input
@@ -39,11 +40,23 @@ class PreprocessDataFrame:
             print(self.error_state)
             raise
 
+    @staticmethod
+    def _get_missing_variable(error_msg):
+        error_str = str(error_msg)
+        offending_variable = error_str[error_str.find("[")+1:error_str.find("]")]
+        return offending_variable
+
     def exclude_columns(self):
         if self.exclusions == ['']:
             pass
         else:
-            self.df = self.df.drop(self.exclusions, axis=1)
+            try:
+                self.df = self.df.drop(self.exclusions, axis=1)
+            except KeyError as e:
+                offending_variable = PreprocessDataFrame._get_missing_variable(e)
+                #TODO: print for now but handle better and pass back to front end
+                print(f"{e} occured: columns not found, {offending_variable} is not in the data")
+                pass
         return self
 
     def clean_string_columns(self):
