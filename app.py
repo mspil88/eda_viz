@@ -4,7 +4,8 @@ from flask import Flask, request, session, make_response, render_template
 from flask_jsglue import JSGlue
 from flask_caching import Cache
 import pandas as pd
-from src.eda.preprocess import PreprocessDataFrame
+from src.preprocess import PreprocessDataFrame
+from src.report_builder import build_report
 
 
 app = Flask(__name__)
@@ -37,7 +38,8 @@ def load():
                                                                                    "delim", "dataExclusions",
                                                                                    "categoricals")(response_json)
         df = PreprocessDataFrame(data, file_extension, delimiter, exclude_columns).process_data()
-        cache.set("data", df)
+        report = build_report(df)
+        cache.set("data", report)
         return render_template("load.html")
 
 @app.route("/relationships")
