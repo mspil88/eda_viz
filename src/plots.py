@@ -35,7 +35,7 @@ def scatterplot_data(df: pd.DataFrame, summary: dict) -> dict:
 
     df = df[numeric_vars].dropna()
 
-    return {"scatterplot_data": {numeric_var: df[numeric_var].astype("int").to_list() for numeric_var in numeric_vars}}
+    return {"scatterplot_data": {numeric_var: df[numeric_var].to_list() for numeric_var in numeric_vars}}
 
 
 def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
@@ -46,11 +46,11 @@ def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
     boxplot = defaultdict(list)
 
     for num, cat in product(numeric_vars, categorical_vars):
-        cats = list(df[cat].dropna().unique())
+        cats = df[cat].dropna().unique().tolist()
         if len(cats) < IGNORE_IF_GREATER_THAN:
             container = [cat, cats]
             for k in cats:
-                data = df.loc[df[cat] == k, num].dropna().astype("int")
+                data = df.loc[df[cat] == k, num].dropna().astype("float")
                 container.append(list(data))
             boxplot[num].append(container)
 

@@ -6,7 +6,7 @@ def calculate_missing_values(column: pd.Series) -> dict:
     length = len(column)
     missing_count = int(column.isna().sum())
 
-    return {"missing": {"count": missing_count, "proportion": 0 if length == 0 else float(missing_count / length)}}
+    return {"missing": {"count": missing_count, "proportion": 0 if length == 0 else round(float(missing_count / length), 2)}}
 
 
 def df_level_missing_values(df: pd.DataFrame) -> tuple:
