@@ -1,4 +1,15 @@
 const uploadBtn = document.querySelector(".upload-btn");
+const loadMsg = document.querySelector(".load-msg");
+
+const successMsg = () => {
+    loadMsg.innerHTML = "Success!"
+    loadMsg.style.color = "green";
+}
+
+const failureMsg = () => {
+    loadMsg.innerHTML = "Failed!";
+    loadMsg.style.color = "red";
+}
 
 const openFile = async ()=> {
     console.log("open file");
@@ -9,7 +20,7 @@ const openFile = async ()=> {
             type: "POST",
             data: JSON.stringify(dataObj),
             contentType: "application/json"})
-            .done(function(res) {console.log("success")})
+            .done(function(res) {successMsg()})
     }
 
 
@@ -24,8 +35,10 @@ const openFile = async ()=> {
         console.log(text);
         const payload = dataToSend(text, fileType, delimiter, dataExclusions, categoricalVariables);
         sendData(payload);
+
     } catch(err) {
         console.log(err);
+        successMsg();
     }
 }
 

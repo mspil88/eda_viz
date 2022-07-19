@@ -597,3 +597,11 @@ input[type="radio"]{
 .delimiter-sel-container {
     display: inline-block;
 }
+
+.load-msg {
+    font-family: arial;
+    margin-top: 0;
+    font-size: 12px;
+    color: green;
+
+}
