@@ -10,7 +10,7 @@ def histogram_values(column: pd.Series, **kwargs) -> dict:
         histogram = np.histogram(column[~check_nans], **kwargs)
     else:
         histogram = np.histogram(column, **kwargs)
-    return {"distribution": {"x": list(histogram[1][:-1]), "y": list(histogram[0])}}
+    return {"distribution": {"x": histogram[1][:-1].tolist(), "y": histogram[0].tolist()}}
 
 
 def frequency_values(column: pd.Series) -> dict:
@@ -23,7 +23,7 @@ def frequency_values(column: pd.Series) -> dict:
         remainder = value_sum - value_counts_top5.sum()
         frequency_dict['other'] = remainder
 
-    return {"distribution": {"x": list(frequency_dict.keys()), "y": list(frequency_dict.values())}}
+    return {"distribution": {"x": list(frequency_dict.keys()), "y": [int(i) for i in frequency_dict.values()]}}
 
 
 def dtype_for_plot(summary: dict, dtype: str):
@@ -35,7 +35,7 @@ def scatterplot_data(df: pd.DataFrame, summary: dict) -> dict:
 
     df = df[numeric_vars].dropna()
 
-    return {"scatterplot_data": {numeric_var: df[numeric_var].to_list() for numeric_var in numeric_vars}}
+    return {"scatterplot_data": {numeric_var: df[numeric_var].astype("int").to_list() for numeric_var in numeric_vars}}
 
 
 def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
@@ -50,7 +50,7 @@ def box_plot_data(df: pd.DataFrame, summary: dict) -> dict:
         if len(cats) < IGNORE_IF_GREATER_THAN:
             container = [cat, cats]
             for k in cats:
-                data = df.loc[df[cat] == k, num].dropna()
+                data = df.loc[df[cat] == k, num].dropna().astype("int")
                 container.append(list(data))
             boxplot[num].append(container)
 

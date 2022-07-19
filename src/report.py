@@ -93,13 +93,14 @@ class NumericVariableReport(VariableReport):
             .retrieve_example(column).calculate_distribution(column).calculate_stats(column).set_dtype()
 
         return {self.name:
-                    [self.dtype,
+                    [
                      self.missing,
                      self.distinct,
                      self.zero,
                      self.examples,
                      self.distribution,
-                     self.stats]}
+                     self.stats,
+                     self.dtype]}
 
 
 class CategoricalVariableReport(NumericVariableReport):

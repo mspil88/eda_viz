@@ -9,19 +9,19 @@ def numeric_statistics(column: pd.Series) -> dict:
     q25 = np.nanpercentile(column, 25)
     q75 = np.nanpercentile(column, 75)
     return {"stats":
-            {"mean": column.mean(),
-             "variance": column.var(),
-             "std": column.std(),
-             "min": _min,
-             "Q25": q25,
-             "median": column.median(),
-             "Q75": q75,
-             "max": _max,
-             "range": _max - _min,
-             "IQR": q75 - q25,
-             "skew": column.skew(),
-             "kurtosis": column.kurt(),
-             "sum": np.sum(column)
+            {"mean": round(float(column.mean()), 2),
+             "variance": round(float(column.var()), 2),
+             "std": round(float(column.std()), 2),
+             "min": round(float(_min), 2),
+             "Q25": round(float(q25), 2),
+             "median": round(float(column.median()), 2),
+             "Q75": round(float(q75), 2),
+             "max": round(float(_max), 2),
+             "range": round(float(_max - _min), 2),
+             "IQR": round(float(q75 - q25), 2),
+             "skew": round(float(column.skew()), 2),
+             "kurtosis": round(float(column.kurt()), 2),
+             "sum": round(float(np.sum(column)), 2)
              }}
 
 
@@ -33,10 +33,16 @@ def entropy(column: pd.Series) -> float:
         counts = column.value_counts()
         probabilities = list(counts/counts.sum())
 
-    return -(probabilities * np.log(probabilities)).sum()
+    return round(float(-(probabilities * np.log(probabilities)).sum()), 3)
 
 
 def categorical_statistics(column: pd.Series) -> dict:
+
+    try:
+        mode = int(column.mode()[0])
+    except ValueError:
+        mode = column.mode()[0]
+
     return {"stats":
-                     {"mode": column.mode()[0],
+                     {"mode": mode,
                       "entropy": entropy(column)}}
