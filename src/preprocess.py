@@ -46,6 +46,11 @@ class PreprocessDataFrame:
         offending_variable = error_str[error_str.find("[")+1:error_str.find("]")]
         return offending_variable
 
+    def clean_columns(self):
+        self.df.columns = self.df.columns.str.strip().str.lower()
+        self.df.columns = self.df.columns.str.replace("[()]", "_").str.replace(".", "_").str.replace(",", "_")
+        return self
+
     def exclude_columns(self):
         if self.exclusions == ['']:
             pass
@@ -72,5 +77,5 @@ class PreprocessDataFrame:
 
     def process_data(self):
 
-        self.parse_df().exclude_columns().clean_string_columns()
+        self.parse_df().exclude_columns().clean_columns().clean_string_columns()
         return self.df
